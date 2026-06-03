@@ -19,7 +19,6 @@ dependencies:
   # Local database
   drift: ^2.22.1
   drift_flutter: ^0.2.4
-  sqlite3_flutter_libs: ^0.5.29
 
   # Secure storage (Keychain / Keystore)
   flutter_secure_storage: ^9.2.4
