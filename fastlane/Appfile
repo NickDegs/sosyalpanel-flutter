@@ -1,0 +1,12 @@
+app_identifier "com.nickdegs.sosyalpanel"
+apple_id "daclen100@gmail.com"
+team_id ENV["APPLE_TEAM_ID"]
+
+for_platform :ios do
+  app_identifier "com.nickdegs.sosyalpanel"
+end
+
+for_platform :android do
+  package_name "com.nickdegs.sosyalpanel"
+  json_key_file ENV["GOOGLE_PLAY_JSON_KEY"]
+end
