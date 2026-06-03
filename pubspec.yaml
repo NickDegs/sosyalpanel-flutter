@@ -36,12 +36,6 @@ dependencies:
   # AdMob
   google_mobile_ads: ^8.0.0
 
-  # Local notifications
-  flutter_local_notifications: ^18.0.1
-
-  # Background tasks
-  workmanager: ^0.5.2
-
   # Charts
   fl_chart: ^0.70.2
 
@@ -56,9 +50,6 @@ dependencies:
 
   # Intl
   intl: ^0.20.2
-
-  # In-app review
-  in_app_review: ^2.0.9
 
   cupertino_icons: ^1.0.8
 
