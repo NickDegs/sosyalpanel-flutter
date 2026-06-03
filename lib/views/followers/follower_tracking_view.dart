@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show OrderingTerm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +22,6 @@ class _FollowerTrackingViewState extends ConsumerState<FollowerTrackingView> {
   FollowerSegment _segment = FollowerSegment.notFollowingBack;
   bool _isRefreshing = false;
   FollowerDiff _diff = FollowerDiff.empty;
-  List<FollowerRecord> _prevFollowers = [];
   DateTime? _lastRefresh;
 
   @override
@@ -74,8 +74,8 @@ class _FollowerTrackingViewState extends ConsumerState<FollowerTrackingView> {
       await database.into(database.followerSnapshots).insert(
             FollowerSnapshotsCompanion.insert(
               platformRaw: _platform.name,
-              followersJson: FollowerRecord.listToJson(lists.followers),
-              followingJson: FollowerRecord.listToJson(lists.following),
+              followersJson: Value(FollowerRecord.listToJson(lists.followers)),
+              followingJson: Value(FollowerRecord.listToJson(lists.following)),
             ),
           );
 
