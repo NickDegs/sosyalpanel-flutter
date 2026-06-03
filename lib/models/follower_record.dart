@@ -20,7 +20,7 @@ class FollowerRecord {
   Map<String, dynamic> toJson() => {
         'uid': uid,
         'handle': handle,
-        if (displayName != null) 'displayName': displayName,
+        'displayName': ?displayName,
       };
 
   static List<FollowerRecord> listFromJson(String json) {

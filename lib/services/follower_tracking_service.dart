@@ -116,7 +116,7 @@ class FollowerTrackingService {
       final uri = Uri.parse('https://bsky.social/xrpc/$endpoint').replace(queryParameters: {
         'actor': actor,
         'limit': '100',
-        if (cursor != null) 'cursor': cursor,
+        'cursor': ?cursor,
       });
       final resp = await http.get(uri, headers: {'Authorization': 'Bearer $token'});
       final data = jsonDecode(resp.body) as Map<String, dynamic>;
