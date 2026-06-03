@@ -67,7 +67,7 @@ class _PlatformSelector extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: SocialPlatform.values.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, i) {
           final p = SocialPlatform.values[i];
           final isSelected = p == selected;

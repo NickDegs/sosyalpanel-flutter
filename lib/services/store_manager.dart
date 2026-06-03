@@ -12,7 +12,7 @@ class StoreManager extends ChangeNotifier {
   List<ProductDetails> products = [];
   bool _isPro = false;
   bool _isAdFree = false;
-  bool _isLoading = false;
+  final bool _isLoading = false;
   StreamSubscription<List<PurchaseDetails>>? _sub;
 
   bool get isPro => _isPro;

@@ -1,7 +1,6 @@
-import 'package:drift/drift.dart' show OrderingTerm;
+import 'package:drift/drift.dart' show OrderingTerm, Value;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/platform.dart';
 import '../../models/follower_record.dart';
 import '../../models/database.dart';
@@ -125,7 +124,7 @@ class _FollowerTrackingViewState extends ConsumerState<FollowerTrackingView> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             scrollDirection: Axis.horizontal,
             itemCount: FollowerTrackingService.listSupportedPlatforms.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            separatorBuilder: (_, _) => const SizedBox(width: 8),
             itemBuilder: (context, i) {
               final p = FollowerTrackingService.listSupportedPlatforms[i];
               final sel = p == _platform;
