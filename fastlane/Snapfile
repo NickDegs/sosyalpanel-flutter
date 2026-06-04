@@ -1,0 +1,20 @@
+# App Store Connect'te gereken tüm iPhone boyutları
+devices([
+  "iPhone 16 Pro Max",   # 6.9" — yeni zorunlu
+  "iPhone 15 Plus",      # 6.7" — zorunlu (büyük boy)
+  "iPhone 8 Plus",       # 5.5" — zorunlu (eski cihaz desteği)
+  "iPhone SE (3rd generation)", # 4.7"
+])
+
+languages(["tr-TR", "en-US"])
+
+scheme("Runner")
+
+# Flutter integration_test ile çalışır
+test_target_name("RunnerUITests")
+
+output_directory("./fastlane/screenshots")
+output_simulator_logs(false)
+clear_previous_screenshots(true)
+override_status_bar(true)
+concurrent_simulators(false)

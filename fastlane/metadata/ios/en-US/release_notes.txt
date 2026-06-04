@@ -1,0 +1,1 @@
+Initial release. Manage 14 social media platforms from one dashboard.

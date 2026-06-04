@@ -50,6 +50,26 @@ platform :ios do
     slack_notify("iOS beta yuklendi") if ENV["SLACK_URL"]
   end
 
+  desc "Tüm cihaz boyutları için screenshot al (simülatörde)"
+  lane :screenshots do
+    # Flutter integration_test tabanlı snapshot
+    snapshot(
+      scheme: "Runner",
+      output_directory: "./fastlane/screenshots",
+      clear_previous_screenshots: true,
+      override_status_bar: true,
+      concurrent_simulators: false,
+      devices: [
+        "iPhone 16 Pro Max",
+        "iPhone 15 Plus",
+        "iPhone 8 Plus",
+        "iPhone SE (3rd generation)"
+      ],
+      languages: ["tr-TR", "en-US"],
+      test_target_name: "RunnerUITests"
+    )
+  end
+
   desc "App Store'a gönder (review)"
   lane :release do
     api_key = asc_key
@@ -77,7 +97,8 @@ platform :ios do
       api_key: api_key,
       submit_for_review: false,
       automatic_release: false,
-      skip_screenshots: true,
+      skip_screenshots: false,
+      screenshots_path: "./fastlane/screenshots",
       skip_metadata: false,
       metadata_path: "./fastlane/metadata/ios"
     )
