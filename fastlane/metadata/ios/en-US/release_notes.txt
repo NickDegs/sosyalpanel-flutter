@@ -1,1 +1,5 @@
-Initial release. Manage 14 social media platforms from one dashboard.
+• iOS 26 Liquid Glass UI — stunning frosted glass design throughout
+• New app icon with purple-blue gradient in Liquid Glass style
+• Improved follower analytics and tracking
+• Performance and stability improvements
+• All 14 platform connections maintained

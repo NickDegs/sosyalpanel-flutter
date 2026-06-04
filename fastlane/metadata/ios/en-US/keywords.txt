@@ -1,1 +1,1 @@
-social media,manager,instagram,twitter,facebook,dashboard,scheduler,analytics,followers,content
+social media,manager,instagram,twitter,facebook,analytics,followers,scheduler,dashboard,bluesky

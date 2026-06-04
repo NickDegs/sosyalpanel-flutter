@@ -1,1 +1,1 @@
-social media,gestione,instagram,twitter,facebook,dashboard,analisi
+social media,instagram,twitter,facebook,follower,analisi,dashboard,contenuto,bluesky,threads

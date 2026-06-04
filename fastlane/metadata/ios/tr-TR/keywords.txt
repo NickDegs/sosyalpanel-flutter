@@ -1,1 +1,1 @@
-sosyal medya,yönetim,instagram,twitter,facebook,panel,zamanlama,analitik,takipçi,içerik
+sosyal medya,instagram,twitter,facebook,takipçi,analitik,panel,içerik,zamanlama,bluesky

@@ -1,1 +1,4 @@
-Primeira versão. Gerencie 14 plataformas de mídia social.
+• Interface iOS 26 Liquid Glass — design vidro fosco
+• Novo ícone com gradiente roxo-azul
+• Análise de seguidores aprimorada
+• Melhorias de desempenho e estabilidade

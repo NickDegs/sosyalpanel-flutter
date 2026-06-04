@@ -1,1 +1,4 @@
-Erste Version. Verwalten Sie 14 Social-Media-Plattformen.
+• iOS 26 Liquid Glass Oberfläche — mattiertes Glas-Design
+• Neues App-Symbol mit lila-blauem Verlauf
+• Verbesserte Follower-Analyse
+• Performance- und Stabilitätsverbesserungen

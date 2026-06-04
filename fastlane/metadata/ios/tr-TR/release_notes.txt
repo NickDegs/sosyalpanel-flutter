@@ -1,1 +1,5 @@
-İlk sürüm. 14 sosyal medya platformunu tek panelden yönetin.
+• iOS 26 Liquid Glass arayüz — yeni cam efekti tasarım dili
+• Yeni uygulama simgesi (mor-mavi degrade, Liquid Glass stili)
+• Takipçi analizi iyileştirmeleri
+• Performans ve stabilite güncellemeleri
+• 14 platform desteği korundu

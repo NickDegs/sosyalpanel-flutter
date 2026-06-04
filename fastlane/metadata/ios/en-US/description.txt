@@ -1,16 +1,49 @@
-Social Panel lets you manage 14 social media platforms from one place.
+Manage 14 social media platforms from one elegant app. Save time. Grow faster.
 
-Control Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon, Bluesky, and Threads — all from a single dashboard.
+Social Panel lets you connect and oversee Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon, Bluesky, and Threads — all from a single beautiful dashboard.
 
-FEATURES:
-• Manage all your platforms from one screen
-• Create and schedule posts
-• Track analytics and statistics
-• Monitor follower growth
-• View engagement metrics
-• Save time with quick actions
+──────────────────────────
+UNIFIED DASHBOARD
+──────────────────────────
+See all your accounts and follower counts at a glance. Instantly spot which platforms are growing and which need attention.
 
-14 PLATFORMS SUPPORTED:
+──────────────────────────
+FOLLOWER INSIGHTS
+──────────────────────────
+• Discover who isn't following you back
+• See who unfollowed you since last check
+• Track new followers by platform
+• Find accounts you follow that don't follow back
+• Growth charts: 7, 30, and 90 days
+
+──────────────────────────
+ANALYTICS & METRICS
+──────────────────────────
+• Follower growth over time
+• Engagement rate tracking
+• Best time to post analysis
+• Per-platform comparative reports
+
+──────────────────────────
+MULTI-PLATFORM POSTING
+──────────────────────────
+Write once, publish to multiple platforms simultaneously. Stop copy-pasting between apps.
+
+──────────────────────────
+PRIVACY & SAFETY
+──────────────────────────
+Social Panel NEVER takes automated actions on your accounts. Every action is yours to make. This ensures full compliance with every platform's terms of service.
+
+Your credentials are stored encrypted on your device only — never sent to our servers.
+
+──────────────────────────
+14 PLATFORMS SUPPORTED
+──────────────────────────
 Instagram • Twitter/X • Facebook • LinkedIn • TikTok • YouTube • Pinterest • Snapchat • Reddit • Telegram • WhatsApp Business • Mastodon • Bluesky • Threads
 
-Simplify your social media management and create more content.
+──────────────────────────
+DESIGN
+──────────────────────────
+Built with the iOS 26 Liquid Glass design language — translucent, modern, and effortlessly beautiful.
+
+Simplify your social media presence today.

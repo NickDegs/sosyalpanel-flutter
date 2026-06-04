@@ -1,16 +1,49 @@
-Social Panel, 14 farklı sosyal medya platformunu tek bir yerden yönetmenizi sağlar.
+14 sosyal medya platformunu tek uygulamadan yönetin. Zaman kazanın, büyüyün.
 
-Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon ve daha fazlasını tek panelden kontrol edin.
+Sosyal Panel; Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon, Bluesky ve Threads hesaplarınızı tek bir şık panelden yönetmenizi sağlar.
 
-ÖZELLİKLER:
-• Tüm platformlarınızı tek ekrandan yönetin
-• Gönderi oluşturun ve zamanlayın
-• Analitik ve istatistikleri takip edin
-• Takipçi büyümesini izleyin
-• Etkileşim metriklerini görüntüleyin
-• Hızlı eylemler ile zaman kazanın
+──────────────────────────
+GENEL BAKIŞ PANELİ
+──────────────────────────
+Tüm platformlarınızı ve takipçi sayılarınızı tek ekranda görün. Hangi hesabın büyüdüğünü, hangisinin durduğunu anında fark edin.
 
-14 PLATFORM DESTEĞİ:
+──────────────────────────
+TAKİPÇİ ANALİZİ
+──────────────────────────
+• Sizi geri takip etmeyenleri görün
+• Sizi bırakanları anında öğrenin
+• Yeni takipçilerinizi listeleyin
+• Siz takip edip geri takip almadıklarınızı keşfedin
+• 7, 30 ve 90 günlük büyüme grafiği
+
+──────────────────────────
+ANALİTİK & METRİKLER
+──────────────────────────
+• Takipçi büyüme grafiği
+• Etkileşim oranı analizi
+• En iyi paylaşım saatlerini keşfedin
+• Platform bazlı karşılaştırmalı raporlar
+
+──────────────────────────
+ÇOKLU PLATFORM PAYLAŞIMI
+──────────────────────────
+Tek sefer yazın, birden fazla platforma aynı anda gönderin. Zaman ve enerji tasarrufu yapın.
+
+──────────────────────────
+GİZLİLİK & GÜVENLİK
+──────────────────────────
+Sosyal Panel, hesaplarınızda HİÇBİR otomatik işlem YAPMAZ. Tüm aksiyonlar size aittir. Bu yaklaşım, kullandığınız tüm platformların kullanım koşullarına tam uyumu garanti eder.
+
+Kimlik bilgileriniz yalnızca cihazınızda şifreli olarak saklanır. Sunucularımıza aktarılmaz.
+
+──────────────────────────
+DESTEKLENEN PLATFORMLAR
+──────────────────────────
 Instagram • Twitter/X • Facebook • LinkedIn • TikTok • YouTube • Pinterest • Snapchat • Reddit • Telegram • WhatsApp Business • Mastodon • Bluesky • Threads
 
-Sosyal medya yönetiminizi kolaylaştırın, daha fazla içerik üretin.
+──────────────────────────
+TASARIM
+──────────────────────────
+iOS 26 Liquid Glass tasarım dili ile geliştirildi. Modern, şeffaf ve göz alıcı arayüz.
+
+Sosyal medya yönetiminizi bugün basitleştirin.

@@ -1,16 +1,42 @@
-Social Panel lets you manage 14 social media platforms from one place.
+Gérez 14 plateformes de réseaux sociaux depuis une seule application élégante. Gagnez du temps. Grandissez plus vite.
 
-Control Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon, Bluesky, and Threads — all from a single dashboard.
+Social Panel vous permet de connecter et superviser Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon, Bluesky et Threads — le tout depuis un tableau de bord unifié.
 
-FEATURES:
-• Manage all your platforms from one screen
-• Create and schedule posts
-• Track analytics and statistics
-• Monitor follower growth
-• View engagement metrics
-• Save time with quick actions
+──────────────────────────
+TABLEAU DE BORD UNIFIÉ
+──────────────────────────
+Visualisez tous vos comptes et le nombre d'abonnés en un coup d'œil. Repérez instantanément les plateformes en croissance.
 
-14 PLATFORMS SUPPORTED:
+──────────────────────────
+ANALYSE DES ABONNÉS
+──────────────────────────
+• Découvrez qui ne vous suit pas en retour
+• Voyez qui vous a désabonné
+• Suivez les nouveaux abonnés par plateforme
+• Trouvez les comptes que vous suivez sans réciprocité
+• Graphiques de croissance : 7, 30 et 90 jours
+
+──────────────────────────
+ANALYTIQUES & MÉTRIQUES
+──────────────────────────
+• Croissance des abonnés dans le temps
+• Suivi du taux d'engagement
+• Analyse des meilleures heures de publication
+• Rapports comparatifs par plateforme
+
+──────────────────────────
+PUBLICATION MULTI-PLATEFORMES
+──────────────────────────
+Rédigez une fois, publiez sur plusieurs plateformes simultanément.
+
+──────────────────────────
+CONFIDENTIALITÉ & SÉCURITÉ
+──────────────────────────
+Social Panel n'effectue JAMAIS d'actions automatiques sur vos comptes. Chaque action vous appartient.
+
+Vos identifiants sont stockés chiffrés uniquement sur votre appareil.
+
+──────────────────────────
+14 PLATEFORMES SUPPORTÉES
+──────────────────────────
 Instagram • Twitter/X • Facebook • LinkedIn • TikTok • YouTube • Pinterest • Snapchat • Reddit • Telegram • WhatsApp Business • Mastodon • Bluesky • Threads
-
-Simplify your social media management and create more content.

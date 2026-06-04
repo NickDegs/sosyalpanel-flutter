@@ -1,1 +1,4 @@
-Primera versión. Gestiona 14 plataformas de redes sociales.
+• Interfaz iOS 26 Liquid Glass — diseño de cristal esmerilado
+• Nuevo ícono de app con gradiente morado-azul
+• Análisis de seguidores mejorado
+• Mejoras de rendimiento y estabilidad

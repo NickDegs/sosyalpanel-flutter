@@ -1,1 +1,1 @@
-soziale medien,verwaltung,instagram,twitter,facebook,dashboard,analytik
+soziale medien,instagram,twitter,facebook,follower,analytics,dashboard,verwaltung,bluesky,threads

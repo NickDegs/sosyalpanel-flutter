@@ -1,16 +1,42 @@
-Social Panel lets you manage 14 social media platforms from one place.
+用一个优雅的应用管理14个社交媒体平台。节省时间，更快成长。
 
-Control Instagram, Twitter/X, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Snapchat, Reddit, Telegram, WhatsApp Business, Mastodon, Bluesky, and Threads — all from a single dashboard.
+Social Panel 让您连接并管理 Instagram、Twitter/X、Facebook、LinkedIn、TikTok、YouTube、Pinterest、Snapchat、Reddit、Telegram、WhatsApp Business、Mastodon、Bluesky 和 Threads — 全部在一个统一的仪表板中。
 
-FEATURES:
-• Manage all your platforms from one screen
-• Create and schedule posts
-• Track analytics and statistics
-• Monitor follower growth
-• View engagement metrics
-• Save time with quick actions
+──────────────────────────
+统一仪表板
+──────────────────────────
+一眼看清所有账户和粉丝数量。即时发现哪些平台正在增长。
 
-14 PLATFORMS SUPPORTED:
+──────────────────────────
+粉丝分析
+──────────────────────────
+• 发现谁没有回关你
+• 查看谁取消关注了你
+• 按平台追踪新粉丝
+• 找到你关注但不回关的账户
+• 增长图表：7、30 和 90 天
+
+──────────────────────────
+数据分析与指标
+──────────────────────────
+• 随时间变化的粉丝增长
+• 互动率追踪
+• 最佳发帖时间分析
+• 各平台对比报告
+
+──────────────────────────
+多平台发布
+──────────────────────────
+写一次，同时发布到多个平台。
+
+──────────────────────────
+隐私与安全
+──────────────────────────
+Social Panel 绝不在您的账户上执行自动操作。每个操作都由您掌控。
+
+您的凭据仅以加密方式存储在您的设备上。
+
+──────────────────────────
+支持14个平台
+──────────────────────────
 Instagram • Twitter/X • Facebook • LinkedIn • TikTok • YouTube • Pinterest • Snapchat • Reddit • Telegram • WhatsApp Business • Mastodon • Bluesky • Threads
-
-Simplify your social media management and create more content.
