@@ -5,6 +5,36 @@ default_platform(:ios)
 # ──────────────────────────────────────────
 platform :ios do
 
+  desc "Distribution cert limiti doluysa en eskiyi iptal et"
+  private_lane :ensure_cert_slot do |options|
+    api_key = options[:api_key]
+    require 'jwt'
+    require 'net/http'
+    require 'json'
+    require 'openssl'
+
+    key     = OpenSSL::PKey::EC.new(File.read(api_key[:key_filepath]))
+    payload = { iss: api_key[:issuer_id], exp: Time.now.to_i + 1200, aud: 'appstoreconnect-v1' }
+    token   = JWT.encode(payload, key, 'ES256', { kid: api_key[:key_id] })
+    headers = { 'Authorization' => "Bearer #{token}", 'Content-Type' => 'application/json' }
+
+    uri  = URI('https://api.appstoreconnect.apple.com/v1/certificates?filter[certificateType]=DISTRIBUTION')
+    req  = Net::HTTP::Get.new(uri, headers)
+    resp = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |h| h.request(req) }
+    certs = JSON.parse(resp.body)['data'] || []
+
+    UI.message("Mevcut Distribution sertifika sayisi: #{certs.count}")
+    if certs.count >= 2
+      oldest  = certs.min_by { |c| c['attributes']['expirationDate'] }
+      cert_id = oldest['id']
+      UI.important("Limit doldu — iptal ediliyor: #{oldest['attributes']['displayName']} (#{cert_id})")
+      del_uri  = URI("https://api.appstoreconnect.apple.com/v1/certificates/#{cert_id}")
+      del_req  = Net::HTTP::Delete.new(del_uri, headers)
+      del_resp = Net::HTTP.start(del_uri.hostname, del_uri.port, use_ssl: true) { |h| h.request(del_req) }
+      del_resp.code == '204' ? UI.success("Iptal edildi.") : UI.error("Iptal basarisiz: #{del_resp.code}")
+    end
+  end
+
   desc "App Store Connect API key objesi oluştur"
   private_lane :asc_key do
     app_store_connect_api_key(
@@ -21,7 +51,7 @@ platform :ios do
     api_key = asc_key
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
 
-    # ASC API üzerinden CI'da dağıtım sertifikası + özel anahtar oluştur (.p12 gerekmez)
+    ensure_cert_slot(api_key: api_key)
     cert(
       api_key: api_key,
       output_path: "/tmp/ios_certs"
@@ -75,6 +105,7 @@ platform :ios do
     api_key = asc_key
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
 
+    ensure_cert_slot(api_key: api_key)
     cert(
       api_key: api_key,
       output_path: "/tmp/ios_certs"
