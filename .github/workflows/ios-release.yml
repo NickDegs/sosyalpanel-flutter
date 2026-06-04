@@ -53,15 +53,34 @@ jobs:
           APPLE_DIST_CERT_P12_PASSWORD: ${{ secrets.APPLE_DIST_CERT_P12_PASSWORD }}
         run: |
           echo "$APPLE_DIST_CERT_P12_BASE64" | base64 --decode > /tmp/dist_cert.p12
+
+          # CI keychain oluştur ve yapılandır
           security create-keychain -p "ci_pass_123" ci_build.keychain
-          security default-keychain -s ci_build.keychain
+          security set-keychain-settings -lut 21600 ci_build.keychain
           security unlock-keychain -p "ci_pass_123" ci_build.keychain
+
+          # Mevcut arama listesine ekle (login keychain'i kaldırma)
+          security list-keychains -d user -s ci_build.keychain \
+            $(security list-keychains -d user | sed s/\"//g)
+
+          # Apple WWDR ara sertifikalarını indir (sertifika zinciri için gerekli)
+          curl -fsSL https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer \
+            -o /tmp/AppleWWDRCAG3.cer
+          curl -fsSL https://www.apple.com/certificateauthority/AppleWWDRCAG6.cer \
+            -o /tmp/AppleWWDRCAG6.cer
+          security import /tmp/AppleWWDRCAG3.cer -k ci_build.keychain -T /usr/bin/codesign
+          security import /tmp/AppleWWDRCAG6.cer -k ci_build.keychain -T /usr/bin/codesign
+
+          # Dağıtım sertifikasını import et
           security import /tmp/dist_cert.p12 -k ci_build.keychain \
             -P "$APPLE_DIST_CERT_P12_PASSWORD" \
             -T /usr/bin/codesign -T /usr/bin/security
           security set-key-partition-list \
             -S apple-tool:,apple:,codesign: -s -k "ci_pass_123" ci_build.keychain
+
           rm /tmp/dist_cert.p12
+          # Doğrula
+          security find-identity -v -p codesigning ci_build.keychain
 
       - name: Run Fastlane
         env:
