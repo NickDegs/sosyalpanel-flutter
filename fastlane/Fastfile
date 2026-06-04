@@ -65,13 +65,30 @@ platform :ios do
     )
     upload_to_testflight(
       api_key: api_key,
-      skip_waiting_for_build_processing: true,
-      # Yeni external beta grubu OLUŞTURMA — sadece internal (App Store Connect Users) grubuna git
+      skip_waiting_for_build_processing: false,
       distribute_external: false,
       notify_external_testers: false,
-      # Internal testers: daclen10@icloud.com uygulamayı görür (hesap sahibi)
       changelog: "Yeni güncelleme yüklendi"
     )
+
+    # Barış'ın her iki Apple ID'sini external beta tester olarak ekle
+    # (Internal testers = App Store Connect Users; daclen100@gmail.com zaten içeride)
+    # daclen10@icloud.com ve daclen10@gmail.com için external tester kaydı açıyoruz
+    ["daclen10@icloud.com", "daclen10@gmail.com"].each do |email|
+      begin
+        add_test_flight_tester(
+          api_key: api_key,
+          email: email,
+          first_name: "Baris",
+          last_name: "Unal",
+          app_identifier: "com.nickdegs.sosyalpanel"
+        )
+        UI.success("Tester eklendi: #{email}")
+      rescue => e
+        UI.message("Tester #{email} zaten ekli veya hata: #{e.message}")
+      end
+    end
+
     slack_notify("iOS beta yuklendi") if ENV["SLACK_URL"]
   end
 
