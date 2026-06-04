@@ -47,6 +47,46 @@ jobs:
           mkdir -p fastlane/keys
           echo "$ASC_KEY_BASE64" | base64 --decode > fastlane/keys/AuthKey_GWS48RC387.p8
 
+      - name: Ensure Distribution cert slot available
+        env:
+          KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_PATH: ${{ github.workspace }}/fastlane/keys/AuthKey_GWS48RC387.p8
+        run: |
+          pip3 install PyJWT cryptography --quiet 2>/dev/null
+          python3 << 'PYEOF'
+          import jwt, time, requests, os, json
+
+          key_id    = os.environ['KEY_ID']
+          issuer_id = os.environ['ISSUER_ID']
+          key_path  = os.environ['KEY_PATH']
+
+          with open(key_path) as f:
+              private_key = f.read()
+
+          token = jwt.encode(
+              {'iss': issuer_id, 'exp': int(time.time()) + 1200, 'aud': 'appstoreconnect-v1'},
+              private_key, algorithm='ES256', headers={'kid': key_id}
+          )
+
+          headers = {'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'}
+          base = 'https://api.appstoreconnect.apple.com/v1'
+
+          r = requests.get(f'{base}/certificates?filter[certificateType]=DISTRIBUTION', headers=headers)
+          certs = r.json().get('data', [])
+          print(f'Mevcut Distribution sertifika sayisi: {len(certs)}')
+
+          if len(certs) >= 2:
+              oldest = sorted(certs, key=lambda c: c['attributes']['expirationDate'])[0]
+              cert_id = oldest['id']
+              name    = oldest['attributes']['displayName']
+              print(f'Limit doldu — en eski iptal ediliyor: {name} ({cert_id})')
+              dr = requests.delete(f'{base}/certificates/{cert_id}', headers=headers)
+              print('Iptal edildi.' if dr.status_code == 204 else f'Hata: {dr.status_code} {dr.text}')
+          else:
+              print('Slot musait, islem gerekmiyor.')
+          PYEOF
+
       - name: Run Fastlane
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
