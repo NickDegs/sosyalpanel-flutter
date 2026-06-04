@@ -16,24 +16,28 @@ platform :ios do
     )
   end
 
-  desc "Flutter build + TestFlight upload (automatic signing)"
+  desc "Flutter build + TestFlight upload"
   lane :beta do
     api_key = asc_key
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
-    key_id    = ENV["APP_STORE_CONNECT_KEY_ID"]
-    issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
-    key_path  = ENV["APP_STORE_CONNECT_KEY_PATH"]  # workflow sets absolute path via ${{ github.workspace }}
-    auth_xcargs = "-allowProvisioningUpdates -authenticationKeyID #{key_id} -authenticationKeyIssuerID #{issuer_id} -authenticationKeyPath #{key_path}"
+
+    # Provisioning profile indir / oluştur
+    sigh(
+      api_key: api_key,
+      app_identifier: "com.nickdegs.sosyalpanel",
+      provisioning_name: "SosyalPanel AppStore",
+      output_path: "/tmp/ios_profiles",
+      force: false
+    )
 
     # --no-codesign: Flutter Dart->native derleme yapar, imzayı build_app'e bırakır
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
+
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
       export_method: "app-store",
-      output_directory: "build/ios/ipa",
-      xcargs: auth_xcargs,
-      export_xcargs: auth_xcargs
+      output_directory: "build/ios/ipa"
     )
     upload_to_testflight(
       api_key: api_key,
@@ -46,18 +50,20 @@ platform :ios do
   lane :release do
     api_key = asc_key
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
-    key_id    = ENV["APP_STORE_CONNECT_KEY_ID"]
-    issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
-    key_path  = ENV["APP_STORE_CONNECT_KEY_PATH"]
-    auth_xcargs = "-allowProvisioningUpdates -authenticationKeyID #{key_id} -authenticationKeyIssuerID #{issuer_id} -authenticationKeyPath #{key_path}"
+
+    sigh(
+      api_key: api_key,
+      app_identifier: "com.nickdegs.sosyalpanel",
+      provisioning_name: "SosyalPanel AppStore",
+      output_path: "/tmp/ios_profiles",
+      force: false
+    )
 
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
-      export_method: "app-store",
-      xcargs: auth_xcargs,
-      export_xcargs: auth_xcargs
+      export_method: "app-store"
     )
     upload_to_app_store(
       api_key: api_key,

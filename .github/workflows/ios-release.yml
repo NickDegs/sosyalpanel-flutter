@@ -47,6 +47,22 @@ jobs:
           mkdir -p fastlane/keys
           echo "$ASC_KEY_BASE64" | base64 --decode > fastlane/keys/AuthKey_GWS48RC387.p8
 
+      - name: Import Distribution Certificate to Keychain
+        env:
+          APPLE_DIST_CERT_P12_BASE64: ${{ secrets.APPLE_DIST_CERT_P12_BASE64 }}
+          APPLE_DIST_CERT_P12_PASSWORD: ${{ secrets.APPLE_DIST_CERT_P12_PASSWORD }}
+        run: |
+          echo "$APPLE_DIST_CERT_P12_BASE64" | base64 --decode > /tmp/dist_cert.p12
+          security create-keychain -p "ci_pass_123" ci_build.keychain
+          security default-keychain -s ci_build.keychain
+          security unlock-keychain -p "ci_pass_123" ci_build.keychain
+          security import /tmp/dist_cert.p12 -k ci_build.keychain \
+            -P "$APPLE_DIST_CERT_P12_PASSWORD" \
+            -T /usr/bin/codesign -T /usr/bin/security
+          security set-key-partition-list \
+            -S apple-tool:,apple:,codesign: -s -k "ci_pass_123" ci_build.keychain
+          rm /tmp/dist_cert.p12
+
       - name: Run Fastlane
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
