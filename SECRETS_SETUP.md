@@ -6,19 +6,23 @@ GitHub repo → Settings → Secrets and variables → Actions → New repositor
 
 | Secret | Nereden Alınır |
 |--------|---------------|
-| `ASC_KEY_CONTENT` | App Store Connect → Users → Keys → .p8 dosyası içeriği |
-| `ASC_KEY_ID` | .p8 oluştururken görünen Key ID (10 karakter) |
-| `ASC_ISSUER_ID` | App Store Connect → Keys sayfasında Issuer ID |
-| `APPLE_TEAM_ID` | Apple Developer → Account → Team ID |
-| `MATCH_GIT_URL` | Sertifika reposu (örn: git@github.com:NickDegs/match-certs.git) |
-| `MATCH_GIT_AUTH` | Base64: `echo -n "user:PAT" \| base64` |
-| `MATCH_PASSWORD` | Sertifika şifreleme parolası (kendin belirle) |
+| `APP_STORE_CONNECT_API_KEY_BASE64` | App Store Connect → Users → Keys → .p8 dosyasını base64'e çevir |
+| `APP_STORE_CONNECT_KEY_ID` | Key ID (örn: GWS48RC387) |
+| `APP_STORE_CONNECT_ISSUER_ID` | Issuer ID (UUID formatı) |
+| `APPLE_TEAM_ID` | Apple Developer → Account → Team ID (örn: SZF4T3P583) |
+| `APPLE_DIST_CERT_P12_BASE64` | Mac'ten export edilen dağıtım sertifikası (aşağıya bak) |
+| `APPLE_DIST_CERT_P12_PASSWORD` | .p12 export sırasında belirlenen şifre |
 
-### iOS Fastlane Match kurulumu (bir kez çalıştır — Mac'te):
+### APPLE_DIST_CERT_P12_BASE64 nasıl alınır (Mac'te bir kez):
+
 ```bash
-# Sertifika repo oluştur (boş private repo: sosyalpanel-certs)
-fastlane match init
-fastlane match appstore --app-identifier com.nickdegs.sosyalpanel
+# 1. Mac'te Keychain Access aç
+# 2. "iOS Distribution: ALKIM BARIS UNAL" sertifikasını bul
+# 3. Sağ tık → Export → dist_cert.p12 olarak kaydet, şifre gir
+# 4. Terminal'de base64'e çevir:
+base64 -i dist_cert.p12 | pbcopy   # panoya kopyalar
+# 5. GitHub → Repo → Settings → Secrets → APPLE_DIST_CERT_P12_BASE64 olarak ekle
+# 6. APPLE_DIST_CERT_P12_PASSWORD olarak da şifreyi ekle
 ```
 
 ## Android için (Google Play)
