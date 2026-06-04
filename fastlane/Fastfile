@@ -13,7 +13,8 @@ platform :ios do
     require 'json'
     require 'openssl'
 
-    key     = OpenSSL::PKey::EC.new(File.read(api_key[:key_filepath]))
+    # app_store_connect_api_key :key içeriği döndürür, :key_filepath değil
+    key     = OpenSSL::PKey::EC.new(api_key[:key])
     payload = { iss: api_key[:issuer_id], exp: Time.now.to_i + 1200, aud: 'appstoreconnect-v1' }
     token   = JWT.encode(payload, key, 'ES256', { kid: api_key[:key_id] })
     headers = { 'Authorization' => "Bearer #{token}", 'Content-Type' => 'application/json' }
