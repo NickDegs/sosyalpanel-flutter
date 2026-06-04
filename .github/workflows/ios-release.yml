@@ -53,8 +53,5 @@ jobs:
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_PATH: fastlane/keys/AuthKey_GWS48RC387.p8
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-          MATCH_GIT_AUTH: ${{ secrets.MATCH_GIT_AUTH }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           BUILD_NUMBER: ${{ github.run_number }}
         run: fastlane ios ${{ github.event.inputs.lane || 'beta' }}
