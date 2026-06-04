@@ -72,11 +72,17 @@ jobs:
           echo "=== Imported identities ==="
           security find-identity -v -p codesigning ci.keychain || true
 
+      - name: Compute build number
+        run: |
+          YYYYMMDD=$(date -u +%Y%m%d)
+          BUILD_NUMBER=$(( (YYYYMMDD - 20260101) * 100 + ${{ github.run_number }} % 100 ))
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
+          echo "Computed build number: $BUILD_NUMBER"
+
       - name: Run Fastlane
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_PATH: ${{ github.workspace }}/fastlane/keys/AuthKey_GWS48RC387.p8
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          BUILD_NUMBER: ${{ github.run_number }}
         run: fastlane ios ${{ github.event.inputs.lane || 'beta' }}

@@ -55,6 +55,9 @@ platform :ios do
       export_options: {
         method: "app-store",
         signingStyle: "manual",
+        # Export compliance: uygulama standart HTTPS dışında şifreleme kullanmıyor
+        compileBitcode: false,
+        usesNonExemptEncryption: false,
         provisioningProfiles: {
           "com.nickdegs.sosyalpanel" => profile_uuid
         }
@@ -62,7 +65,12 @@ platform :ios do
     )
     upload_to_testflight(
       api_key: api_key,
-      skip_waiting_for_build_processing: true
+      skip_waiting_for_build_processing: true,
+      # Yeni external beta grubu OLUŞTURMA — sadece internal (App Store Connect Users) grubuna git
+      distribute_external: false,
+      notify_external_testers: false,
+      # Internal testers: daclen10@icloud.com uygulamayı görür (hesap sahibi)
+      changelog: "Yeni güncelleme yüklendi"
     )
     slack_notify("iOS beta yuklendi") if ENV["SLACK_URL"]
   end
@@ -121,6 +129,8 @@ platform :ios do
       export_options: {
         method: "app-store",
         signingStyle: "manual",
+        compileBitcode: false,
+        usesNonExemptEncryption: false,
         provisioningProfiles: {
           "com.nickdegs.sosyalpanel" => profile_uuid
         }
