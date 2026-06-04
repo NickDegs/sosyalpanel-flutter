@@ -1,5 +1,5 @@
 app_identifier "com.nickdegs.sosyalpanel"
-apple_id "daclen100@gmail.com"
+apple_id "daclen10@icloud.com"
 team_id ENV["APPLE_TEAM_ID"]
 
 for_platform :ios do
