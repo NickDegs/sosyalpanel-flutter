@@ -66,14 +66,15 @@ platform :ios do
 
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
 
-    # Manual signing: Xcode'un Development profile aramasını engeller
+    # Manual signing + DEVELOPMENT_TEAM tüm SPM plugin targetlarına da gerekli
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
       configuration: "Release",
       export_method: "app-store",
       output_directory: "build/ios/ipa",
-      xcargs: "CODE_SIGN_STYLE=Manual " \
+      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']} " \
+              "CODE_SIGN_STYLE=Manual " \
               "PROVISIONING_PROFILE_SPECIFIER=#{profile_uuid} " \
               "CODE_SIGN_IDENTITY='Apple Distribution'",
       export_options: {
@@ -133,7 +134,8 @@ platform :ios do
       scheme: "Runner",
       configuration: "Release",
       export_method: "app-store",
-      xcargs: "CODE_SIGN_STYLE=Manual " \
+      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']} " \
+              "CODE_SIGN_STYLE=Manual " \
               "PROVISIONING_PROFILE_SPECIFIER=#{profile_uuid} " \
               "CODE_SIGN_IDENTITY='Apple Distribution'",
       export_options: {
