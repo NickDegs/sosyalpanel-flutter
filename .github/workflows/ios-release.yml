@@ -14,6 +14,8 @@ on:
 jobs:
   ios:
     runs-on: macos-latest
+    timeout-minutes: 60
+
     steps:
       - uses: actions/checkout@v4
 
@@ -38,18 +40,18 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane
 
-      - name: Write App Store Connect API Key
+      - name: Decode App Store Connect API Key
         env:
-          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+          ASC_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
         run: |
           mkdir -p fastlane/keys
-          echo "$ASC_KEY_CONTENT" > fastlane/keys/asc_key.p8
+          echo "$ASC_KEY_BASE64" | base64 --decode > fastlane/keys/AuthKey_GWS48RC387.p8
 
       - name: Run Fastlane
         env:
-          APP_STORE_CONNECT_API_KEY_PATH: fastlane/keys/asc_key.p8
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_PATH: fastlane/keys/AuthKey_GWS48RC387.p8
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           MATCH_GIT_AUTH: ${{ secrets.MATCH_GIT_AUTH }}
