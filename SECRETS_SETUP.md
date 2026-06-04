@@ -36,7 +36,7 @@ fastlane match appstore --app-identifier com.nickdegs.sosyalpanel
 keytool -genkey -v -keystore upload-keystore.jks \
   -keyalg RSA -keysize 2048 -validity 10000 \
   -alias upload \
-  -dname "CN=SosyalPanel, O=NickDegs, C=TR"
+  -dname "CN=Social Panel, O=NickDegs, C=TR"
 
 # GitHub secret için base64'e çevir:
 base64 -w 0 upload-keystore.jks

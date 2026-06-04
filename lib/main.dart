@@ -7,11 +7,11 @@ import 'views/root_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StoreManager.shared.init();
-  runApp(const ProviderScope(child: SosyalPanelApp()));
+  runApp(const ProviderScope(child: SocialPanelApp()));
 }
 
-class SosyalPanelApp extends StatelessWidget {
-  const SosyalPanelApp({super.key});
+class SocialPanelApp extends StatelessWidget {
+  const SocialPanelApp({super.key});
 
   @override
   Widget build(BuildContext context) {
