@@ -22,7 +22,7 @@ platform :ios do
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
     key_id    = ENV["APP_STORE_CONNECT_KEY_ID"]
     issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
-    key_path  = File.expand_path(ENV["APP_STORE_CONNECT_KEY_PATH"])
+    key_path  = ENV["APP_STORE_CONNECT_KEY_PATH"]  # workflow sets absolute path via ${{ github.workspace }}
     auth_xcargs = "-allowProvisioningUpdates -authenticationKeyID #{key_id} -authenticationKeyIssuerID #{issuer_id} -authenticationKeyPath #{key_path}"
 
     # --no-codesign: Flutter Dart->native derleme yapar, imzayı build_app'e bırakır
@@ -48,7 +48,7 @@ platform :ios do
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
     key_id    = ENV["APP_STORE_CONNECT_KEY_ID"]
     issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
-    key_path  = File.expand_path(ENV["APP_STORE_CONNECT_KEY_PATH"])
+    key_path  = ENV["APP_STORE_CONNECT_KEY_PATH"]
     auth_xcargs = "-allowProvisioningUpdates -authenticationKeyID #{key_id} -authenticationKeyIssuerID #{issuer_id} -authenticationKeyPath #{key_path}"
 
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
