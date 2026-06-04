@@ -64,19 +64,26 @@ platform :ios do
     )
     profile_uuid = lane_context[SharedValues::SIGH_UUID]
 
+    # Sadece Runner target için manual signing + profil ata (Pods/SPM miras almaz)
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "ios/Runner.xcodeproj",
+      team_id: ENV["APPLE_TEAM_ID"],
+      bundle_identifier: "com.nickdegs.sosyalpanel",
+      code_sign_identity: "Apple Distribution",
+      profile_uuid: profile_uuid
+    )
+
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
 
-    # Manual signing + DEVELOPMENT_TEAM tüm SPM plugin targetlarına da gerekli
+    # DEVELOPMENT_TEAM global (tüm targetlar için), PROVISIONING_PROFILE xcargs'ta yok
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
       configuration: "Release",
       export_method: "app-store",
       output_directory: "build/ios/ipa",
-      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']} " \
-              "CODE_SIGN_STYLE=Manual " \
-              "PROVISIONING_PROFILE_SPECIFIER=#{profile_uuid} " \
-              "CODE_SIGN_IDENTITY='Apple Distribution'",
+      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']}",
       export_options: {
         method: "app-store",
         signingStyle: "manual",
@@ -128,16 +135,22 @@ platform :ios do
     )
     profile_uuid = lane_context[SharedValues::SIGH_UUID]
 
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "ios/Runner.xcodeproj",
+      team_id: ENV["APPLE_TEAM_ID"],
+      bundle_identifier: "com.nickdegs.sosyalpanel",
+      code_sign_identity: "Apple Distribution",
+      profile_uuid: profile_uuid
+    )
+
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
       configuration: "Release",
       export_method: "app-store",
-      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']} " \
-              "CODE_SIGN_STYLE=Manual " \
-              "PROVISIONING_PROFILE_SPECIFIER=#{profile_uuid} " \
-              "CODE_SIGN_IDENTITY='Apple Distribution'",
+      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']}",
       export_options: {
         method: "app-store",
         signingStyle: "manual",
