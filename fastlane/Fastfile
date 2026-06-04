@@ -20,6 +20,11 @@ platform :ios do
   lane :beta do
     api_key = asc_key
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
+    key_id    = ENV["APP_STORE_CONNECT_KEY_ID"]
+    issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
+    key_path  = File.expand_path(ENV["APP_STORE_CONNECT_KEY_PATH"])
+    auth_xcargs = "-allowProvisioningUpdates -authenticationKeyID #{key_id} -authenticationKeyIssuerID #{issuer_id} -authenticationKeyPath #{key_path}"
+
     # --no-codesign: Flutter Dart->native derleme yapar, imzayı build_app'e bırakır
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
     build_app(
@@ -27,8 +32,8 @@ platform :ios do
       scheme: "Runner",
       export_method: "app-store",
       output_directory: "build/ios/ipa",
-      xcargs: "-allowProvisioningUpdates",
-      export_xcargs: "-allowProvisioningUpdates"
+      xcargs: auth_xcargs,
+      export_xcargs: auth_xcargs
     )
     upload_to_testflight(
       api_key: api_key,
@@ -41,13 +46,18 @@ platform :ios do
   lane :release do
     api_key = asc_key
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
+    key_id    = ENV["APP_STORE_CONNECT_KEY_ID"]
+    issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
+    key_path  = File.expand_path(ENV["APP_STORE_CONNECT_KEY_PATH"])
+    auth_xcargs = "-allowProvisioningUpdates -authenticationKeyID #{key_id} -authenticationKeyIssuerID #{issuer_id} -authenticationKeyPath #{key_path}"
+
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
       export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates",
-      export_xcargs: "-allowProvisioningUpdates"
+      xcargs: auth_xcargs,
+      export_xcargs: auth_xcargs
     )
     upload_to_app_store(
       api_key: api_key,
