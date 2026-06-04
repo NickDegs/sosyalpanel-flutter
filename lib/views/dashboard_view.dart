@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/platform.dart';
 import '../providers/auth_provider.dart';
+import '../providers/locale_provider.dart';
 
 class DashboardView extends ConsumerWidget {
   const DashboardView({super.key});
@@ -13,7 +14,7 @@ class DashboardView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Social Panel'),
+        title: Text(ref.watch(localeProvider.notifier).appName(context)),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

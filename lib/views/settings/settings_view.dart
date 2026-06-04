@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/platform.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/locale_provider.dart';
 import '../../services/auth_service.dart';
 import '../auth/bluesky_auth_sheet.dart';
 import '../auth/simple_auth_sheet.dart';
@@ -24,6 +25,9 @@ class SettingsView extends ConsumerWidget {
                 onConnect: () => _connect(context, ref, p),
                 onDisconnect: () => ref.read(authProvider.notifier).disconnect(p),
               )),
+          const Divider(),
+          const _SectionHeader('Dil / Language'),
+          _LanguageTile(),
           const Divider(),
           const _SectionHeader('Uygulama'),
           ListTile(
@@ -142,6 +146,61 @@ class SettingsView extends ConsumerWidget {
             child: const Text('Bağlan'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _LanguageTile extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final currentCode = locale?.languageCode;
+    final currentName = currentCode != null
+        ? languageNames[currentCode] ?? currentCode
+        : 'Sistem dili';
+
+    return ListTile(
+      leading: const Icon(Icons.language),
+      title: const Text('Uygulama Dili'),
+      trailing: Text(currentName, style: const TextStyle(color: Colors.grey)),
+      onTap: () => _showPicker(context, ref, currentCode),
+    );
+  }
+
+  void _showPicker(BuildContext context, WidgetRef ref, String? current) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Text('Dil Seç', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.phone_android),
+              title: const Text('Sistem dili'),
+              trailing: current == null ? const Icon(Icons.check, color: Colors.green) : null,
+              onTap: () {
+                ref.read(localeProvider.notifier).setLocale(null);
+                Navigator.pop(context);
+              },
+            ),
+            const Divider(height: 1),
+            ...languageNames.entries.map((e) => ListTile(
+              title: Text('${e.value}  —  ${appNameByLocale[e.key] ?? ''}'),
+              trailing: current == e.key ? const Icon(Icons.check, color: Colors.green) : null,
+              onTap: () {
+                ref.read(localeProvider.notifier).setLocale(e.key);
+                Navigator.pop(context);
+              },
+            )),
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
     );
   }

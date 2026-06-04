@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'providers/locale_provider.dart';
 import 'services/store_manager.dart';
 import 'views/root_view.dart';
 
@@ -10,13 +11,17 @@ void main() async {
   runApp(const ProviderScope(child: SocialPanelApp()));
 }
 
-class SocialPanelApp extends StatelessWidget {
+class SocialPanelApp extends ConsumerWidget {
   const SocialPanelApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final code = locale?.languageCode ?? 'en';
+    final title = appNameByLocale[code] ?? 'Social Panel';
     return MaterialApp(
-      title: 'Social Panel',
+      title: title,
+      locale: locale,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: const Color(0xFF6C5CE7),
