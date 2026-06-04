@@ -53,24 +53,36 @@ platform :ios do
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
 
     ensure_cert_slot(api_key: api_key)
-    cert(
+    cert(api_key: api_key, output_path: "/tmp/ios_certs")
+
+    # App Store Distribution profili indir + keychain'e kur
+    sigh(
       api_key: api_key,
-      output_path: "/tmp/ios_certs"
+      app_identifier: "com.nickdegs.sosyalpanel",
+      output_path: "/tmp/ios_profiles",
+      force: true
     )
+    profile_uuid = lane_context[SharedValues::SIGH_UUID]
 
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
 
-    # -allowProvisioningUpdates: Xcode provisioning profile'ı ASC API ile otomatik yönetir
+    # Manual signing: Xcode'un Development profile aramasını engeller
     build_app(
       workspace: "ios/Runner.xcworkspace",
       scheme: "Runner",
       configuration: "Release",
       export_method: "app-store",
       output_directory: "build/ios/ipa",
-      xcargs: "-allowProvisioningUpdates " \
-              "-authenticationKeyPath '#{ENV['APP_STORE_CONNECT_KEY_PATH']}' " \
-              "-authenticationKeyID #{ENV['APP_STORE_CONNECT_KEY_ID']} " \
-              "-authenticationKeyIssuerID #{ENV['APP_STORE_CONNECT_ISSUER_ID']}"
+      xcargs: "CODE_SIGN_STYLE=Manual " \
+              "PROVISIONING_PROFILE_SPECIFIER=#{profile_uuid} " \
+              "CODE_SIGN_IDENTITY='Apple Distribution'",
+      export_options: {
+        method: "app-store",
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "com.nickdegs.sosyalpanel" => profile_uuid
+        }
+      }
     )
     upload_to_testflight(
       api_key: api_key,
@@ -105,10 +117,15 @@ platform :ios do
     build_number = (ENV["BUILD_NUMBER"] || "1").to_i
 
     ensure_cert_slot(api_key: api_key)
-    cert(
+    cert(api_key: api_key, output_path: "/tmp/ios_certs")
+
+    sigh(
       api_key: api_key,
-      output_path: "/tmp/ios_certs"
+      app_identifier: "com.nickdegs.sosyalpanel",
+      output_path: "/tmp/ios_profiles",
+      force: true
     )
+    profile_uuid = lane_context[SharedValues::SIGH_UUID]
 
     sh("cd .. && flutter build ios --release --no-codesign --build-number #{build_number} --split-debug-info=build/debug-info")
     build_app(
@@ -116,10 +133,16 @@ platform :ios do
       scheme: "Runner",
       configuration: "Release",
       export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates " \
-              "-authenticationKeyPath '#{ENV['APP_STORE_CONNECT_KEY_PATH']}' " \
-              "-authenticationKeyID #{ENV['APP_STORE_CONNECT_KEY_ID']} " \
-              "-authenticationKeyIssuerID #{ENV['APP_STORE_CONNECT_ISSUER_ID']}"
+      xcargs: "CODE_SIGN_STYLE=Manual " \
+              "PROVISIONING_PROFILE_SPECIFIER=#{profile_uuid} " \
+              "CODE_SIGN_IDENTITY='Apple Distribution'",
+      export_options: {
+        method: "app-store",
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "com.nickdegs.sosyalpanel" => profile_uuid
+        }
+      }
     )
     upload_to_app_store(
       api_key: api_key,
