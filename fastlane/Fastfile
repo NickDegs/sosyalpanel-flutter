@@ -150,7 +150,7 @@ platform :android do
     sh("cd .. && flutter build appbundle --release --build-number #{build_number} --split-debug-info=build/debug-info")
     upload_to_play_store(
       track: "internal",
-      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      aab: "build/app/outputs/bundle/release/app-release.aab",
       json_key: ENV["GOOGLE_PLAY_JSON_KEY"],
       package_name: "com.nickdegs.sosyalpanel",
       skip_upload_apk: true,
