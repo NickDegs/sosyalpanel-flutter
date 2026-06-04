@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/locale_provider.dart';
 import 'services/store_manager.dart';
+import 'theme/liquid_glass.dart';
 import 'views/root_view.dart';
 
 void main() async {
@@ -23,16 +24,8 @@ class SocialPanelApp extends ConsumerWidget {
       title: title,
       locale: locale,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF6C5CE7),
-        brightness: Brightness.light,
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorSchemeSeed: const Color(0xFF6C5CE7),
-        brightness: Brightness.dark,
-        useMaterial3: true,
-      ),
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
       themeMode: ThemeMode.system,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -56,6 +49,46 @@ class SocialPanelApp extends ConsumerWidget {
         Locale('kk'),
       ],
       home: const RootView(),
+    );
+  }
+
+  ThemeData _buildTheme(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    return ThemeData(
+      colorSchemeSeed: LiquidGlass.colorSeed,
+      brightness: brightness,
+      useMaterial3: true,
+      scaffoldBackgroundColor: Colors.transparent,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
+      cardTheme: CardThemeData(
+        color: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      chipTheme: ChipThemeData(
+        side: BorderSide(
+          color: isDark ? const Color(0x28FFFFFF) : const Color(0x40000000),
+          width: 0.5,
+        ),
+        labelStyle: TextStyle(
+          color: isDark ? Colors.white70 : Colors.black87,
+          fontSize: 12,
+        ),
+        backgroundColor: isDark ? const Color(0x18FFFFFF) : const Color(0x20000000),
+      ),
+      dividerTheme: DividerThemeData(
+        color: isDark ? const Color(0x28FFFFFF) : const Color(0x28000000),
+        thickness: 0.5,
+      ),
+      listTileTheme: ListTileThemeData(
+        textColor: isDark ? Colors.white : const Color(0xFF1A1035),
+        iconColor: isDark ? Colors.white70 : const Color(0xFF6B5EA7),
+      ),
     );
   }
 }

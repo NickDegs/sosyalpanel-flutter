@@ -71,6 +71,14 @@ jobs:
           mkdir -p fastlane/keys
           echo "$PLAY_JSON" > fastlane/keys/play_key.json
 
+      - name: Compute build number
+        run: |
+          # YYMMDDRRR formatı: her gün 1000'e kadar run destekler, asla çakışmaz
+          YYYYMMDD=$(date -u +%Y%m%d)
+          BUILD_NUMBER=$(( (YYYYMMDD - 20260101) * 100 + ${{ github.run_number }} % 100 ))
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
+          echo "Computed build number: $BUILD_NUMBER"
+
       - name: Run Fastlane
         env:
           GOOGLE_PLAY_JSON_KEY: fastlane/keys/play_key.json
@@ -78,6 +86,5 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          BUILD_NUMBER: ${{ github.run_number }}
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m"
         run: fastlane android ${{ github.event.inputs.lane || 'beta' }}

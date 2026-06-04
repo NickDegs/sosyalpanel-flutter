@@ -1,35 +1,77 @@
 import 'package:flutter/material.dart';
+import '../theme/liquid_glass.dart';
 
 class ActionsView extends StatelessWidget {
   const ActionsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final topPad = MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
+    final bottomPad = MediaQuery.paddingOf(context).bottom + 16;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Aksiyon Merkezi')),
+      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
+      appBar: const GlassAppBar(title: Text('Aksiyon Merkezi')),
       body: ListView(
+        padding: EdgeInsets.fromLTRB(16, topPad, 16, bottomPad),
         children: [
-          const _SectionHeader('İçgörüler'),
-          const ListTile(
-            leading: Icon(Icons.info_outline, color: Colors.blue),
-            title: Text('Yeterli veri bekleniyor'),
-            subtitle: Text('Daha fazla veri toplandıkça içgörüler görünecek.'),
+          _GlassSectionCard(
+            icon: Icons.lightbulb_outline_rounded,
+            iconColor: const Color(0xFF60A5FA),
+            title: 'İçgörüler',
+            children: [
+              _GlassListItem(
+                icon: Icons.info_outline_rounded,
+                iconColor: const Color(0xFF60A5FA),
+                title: 'Yeterli veri bekleniyor',
+                subtitle:
+                    'Daha fazla veri toplandıkça içgörüler görünecek.',
+              ),
+            ],
           ),
-          const Divider(),
-          const _SectionHeader('Yapılacak Aksiyonlar'),
-          const ListTile(
-            leading: Icon(Icons.check_circle_outline, color: Colors.green),
-            title: Text('Tüm aksiyonlar tamamlandı'),
-            subtitle: Text('Hesaplarınız tarandıkça yeni öneriler eklenecek.'),
+          const SizedBox(height: 12),
+          _GlassSectionCard(
+            icon: Icons.checklist_rounded,
+            iconColor: const Color(0xFF34D399),
+            title: 'Yapılacak Aksiyonlar',
+            children: [
+              _GlassListItem(
+                icon: Icons.check_circle_outline_rounded,
+                iconColor: const Color(0xFF34D399),
+                title: 'Tüm aksiyonlar tamamlandı',
+                subtitle:
+                    'Hesaplarınız tarandıkça yeni öneriler eklenecek.',
+              ),
+            ],
           ),
-          const Divider(),
-          Padding(
+          const SizedBox(height: 12),
+          GlassContainer(
+            borderRadius: 16,
+            tint: const Color(0x0FFFFFFF),
             padding: const EdgeInsets.all(16),
-            child: Text(
-              'ℹ️ Bu uygulama hesaplarınızda otomatik aksiyon ALMAZ. '
-              'Tüm aksiyonları kendiniz gerçekleştirirsiniz. '
-              'Bu, platformların kullanım koşullarına uygunluğu garanti eder.',
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.shield_outlined,
+                  size: 18,
+                  color: LiquidGlass.textSecondary(context),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Bu uygulama hesaplarınızda otomatik aksiyon ALMAZ. '
+                    'Tüm aksiyonları kendiniz gerçekleştirirsiniz. '
+                    'Bu, platformların kullanım koşullarına uygunluğu garanti eder.',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: LiquidGlass.textSecondary(context),
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -38,15 +80,94 @@ class ActionsView extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
+class _GlassSectionCard extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
   final String title;
-  const _SectionHeader(this.title);
+  final List<Widget> children;
+
+  const _GlassSectionCard({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-      child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.grey)),
+    return GlassContainer(
+      borderRadius: 20,
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: iconColor.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, size: 14, color: iconColor),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: LiquidGlass.textSecondary(context),
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 1, indent: 16, endIndent: 16),
+          ...children,
+          const SizedBox(height: 4),
+        ],
+      ),
+    );
+  }
+}
+
+class _GlassListItem extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String subtitle;
+
+  const _GlassListItem({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon, color: iconColor, size: 22),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          color: LiquidGlass.textPrimary(context),
+        ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(
+          color: LiquidGlass.textSecondary(context),
+          fontSize: 12,
+        ),
+      ),
     );
   }
 }
