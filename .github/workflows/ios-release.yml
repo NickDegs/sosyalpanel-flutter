@@ -47,12 +47,6 @@ jobs:
           mkdir -p fastlane/keys
           echo "$ASC_KEY_BASE64" | base64 --decode > fastlane/keys/AuthKey_GWS48RC387.p8
 
-      - name: Import Distribution Certificate to Keychain
-        uses: apple-actions/import-codesign-certs@v3
-        with:
-          p12-file-base64: ${{ secrets.IOS }}
-          p12-password: ${{ secrets.APPLE_DIST_CERT_P12_PASSWORD }}
-
       - name: Run Fastlane
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
