@@ -67,7 +67,7 @@ class AuthService {
     final regResp = await http.post(
       Uri.parse('https://$host/api/v1/apps'),
       body: {
-        'client_name': 'SosyalPanel',
+        'client_name': 'Social Panel',
         'redirect_uris': 'sosyalpanel://oauth/mastodon',
         'scopes': 'read write',
         'website': 'https://realvirtuality.app',

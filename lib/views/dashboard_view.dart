@@ -13,7 +13,7 @@ class DashboardView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SosyalPanel'),
+        title: const Text('Social Panel'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

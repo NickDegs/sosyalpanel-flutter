@@ -16,7 +16,7 @@ class SosyalPanelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SosyalPanel',
+      title: 'Social Panel',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: const Color(0xFF6C5CE7),
