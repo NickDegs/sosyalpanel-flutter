@@ -51,7 +51,7 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m"
-        run: flutter build appbundle --release --build-number 1 --split-debug-info=build/debug-info
+        run: flutter build appbundle --release --build-number 2 --split-debug-info=build/debug-info
 
       - name: Upload AAB artifact
         uses: actions/upload-artifact@v4
