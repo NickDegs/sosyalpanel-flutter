@@ -40,14 +40,14 @@ jobs:
       - name: Generate code (drift)
         run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: Setup Ruby + Fastlane
+      - name: Setup Ruby + Bundler
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
-          bundler-cache: true
+          bundler-cache: false
 
-      - name: Install Fastlane
-        run: gem install fastlane
+      - name: Install Fastlane via Bundler
+        run: bundle install
 
       - name: Decode App Store Connect API Key
         env:
@@ -85,4 +85,4 @@ jobs:
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_PATH: ${{ github.workspace }}/fastlane/keys/AuthKey_GWS48RC387.p8
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: fastlane ios ${{ github.event.inputs.lane || 'beta' }}
+        run: bundle exec fastlane ios ${{ github.event.inputs.lane || 'beta' }}
