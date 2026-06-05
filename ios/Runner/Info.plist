@@ -23,6 +23,8 @@
 	<string>Sosyal medya paylaşımı için fotoğraf erişimi gereklidir.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Alakalı reklamlar göstermek için kullanılır.</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.nickdegs.sosyalpanel.refresh</string>

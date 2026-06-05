@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/locale_provider.dart';
+import 'services/ad_service.dart';
 import 'services/store_manager.dart';
 import 'theme/liquid_glass.dart';
 import 'views/root_view.dart';
@@ -9,6 +10,7 @@ import 'views/root_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StoreManager.shared.init();
+  await AdService.shared.initialize();
   runApp(const ProviderScope(child: SocialPanelApp()));
 }
 

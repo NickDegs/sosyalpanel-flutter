@@ -32,8 +32,11 @@ dependencies:
   # In-app purchases
   in_app_purchase: ^3.2.0
 
-  # AdMob
+  # AdMob + UMP consent
   google_mobile_ads: ^8.0.0
+
+  # iOS ATT (App Tracking Transparency)
+  app_tracking_transparency: ^2.0.6
 
   # Charts
   fl_chart: ^0.70.2
