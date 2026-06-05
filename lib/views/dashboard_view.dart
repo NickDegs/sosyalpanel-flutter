@@ -4,6 +4,7 @@ import '../models/platform.dart';
 import '../providers/auth_provider.dart';
 import '../providers/locale_provider.dart';
 import '../theme/liquid_glass.dart';
+import '../utils/adaptive.dart';
 
 class DashboardView extends ConsumerWidget {
   const DashboardView({super.key});
@@ -93,13 +94,15 @@ class _AccountGrid extends StatelessWidget {
         MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
     final bottomPad = MediaQuery.paddingOf(context).bottom + 16;
 
+    final cols = context.gridColumns;
+    final pad = context.hPad;
     return GridView.builder(
-      padding: EdgeInsets.fromLTRB(16, topPad, 16, bottomPad),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      padding: EdgeInsets.fromLTRB(pad, topPad, pad, bottomPad),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: cols,
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
-        childAspectRatio: 1.3,
+        childAspectRatio: context.cardAspectRatio,
       ),
       itemCount: connected.length,
       itemBuilder: (context, i) => _PlatformCard(platform: connected[i]),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/platform.dart';
 import '../theme/liquid_glass.dart';
+import '../utils/adaptive.dart';
 
 class MetricsView extends StatefulWidget {
   const MetricsView({super.key});
@@ -19,7 +20,7 @@ class _MetricsViewState extends State<MetricsView> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return ListView(
       padding: EdgeInsets.fromLTRB(
-          16, 8, 16, MediaQuery.paddingOf(context).bottom + 16),
+          context.hPad, 8, context.hPad, MediaQuery.paddingOf(context).bottom + 16),
       children: [
         _PlatformSelector(
           selected: _selected,

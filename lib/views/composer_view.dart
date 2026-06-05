@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/platform.dart';
 import '../providers/auth_provider.dart';
 import '../theme/liquid_glass.dart';
+import '../utils/adaptive.dart';
 
 class ComposerView extends ConsumerStatefulWidget {
   const ComposerView({super.key});
@@ -29,6 +30,7 @@ class _ComposerViewState extends ConsumerState<ComposerView> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final topPad = MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
     final bottomPad = MediaQuery.paddingOf(context).bottom + 16;
+    final pad = context.hPad;
     final canSend = _selectedPlatforms.isNotEmpty &&
         _controller.text.isNotEmpty &&
         !_isSending;
@@ -67,7 +69,7 @@ class _ComposerViewState extends ConsumerState<ComposerView> {
             // Text editor glass panel
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                padding: EdgeInsets.fromLTRB(pad, 0, pad, 8),
                 child: GlassContainer(
                   borderRadius: 20,
                   padding: const EdgeInsets.all(16),

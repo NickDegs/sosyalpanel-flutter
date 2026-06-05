@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/liquid_glass.dart';
+import '../utils/adaptive.dart';
 
 class ActionsView extends StatelessWidget {
   const ActionsView({super.key});
@@ -8,13 +9,14 @@ class ActionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final topPad = MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
     final bottomPad = MediaQuery.paddingOf(context).bottom + 16;
+    final pad = context.hPad;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: const GlassAppBar(title: Text('Aksiyon Merkezi')),
       body: ListView(
-        padding: EdgeInsets.fromLTRB(16, topPad, 16, bottomPad),
+        padding: EdgeInsets.fromLTRB(pad, topPad, pad, bottomPad),
         children: [
           _GlassSectionCard(
             icon: Icons.lightbulb_outline_rounded,

@@ -5,6 +5,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/locale_provider.dart';
 import '../../services/auth_service.dart';
 import '../../theme/liquid_glass.dart';
+import '../../utils/adaptive.dart';
 import '../auth/bluesky_auth_sheet.dart';
 import '../auth/simple_auth_sheet.dart';
 
@@ -22,7 +23,7 @@ class SettingsView extends ConsumerWidget {
       extendBodyBehindAppBar: true,
       appBar: const GlassAppBar(title: Text('Ayarlar')),
       body: ListView(
-        padding: EdgeInsets.fromLTRB(16, topPad, 16, bottomPad),
+        padding: EdgeInsets.fromLTRB(context.hPad, topPad, context.hPad, bottomPad),
         children: [
           _GlassSection(
             title: 'Bağlı Hesaplar',
