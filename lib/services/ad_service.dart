@@ -27,14 +27,11 @@ class AdService {
   Future<void> initialize() async {
     if (_initialized) return;
 
-    // iOS: ATT izni iste
     if (Platform.isIOS) {
       await _requestATT();
     }
 
-    // UMP (GDPR) consent — EEA kullanıcıları için
     await _requestConsentInfo();
-
     await MobileAds.instance.initialize();
     _initialized = true;
   }
@@ -51,36 +48,22 @@ class AdService {
     }
   }
 
+  // loadAndShowConsentFormIfRequired zaten gerekip gerekmediğine karar verir;
+  // consentStatus kontrolü v8 API'sinde gerekli değil.
   Future<void> _requestConsentInfo() async {
     final completer = Completer<void>();
-    try {
-      ConsentInformation.instance.requestConsentInfoUpdate(
-        ConsentRequestParameters(),
-        () async {
-          // Onay gerekiyorsa formu göster
-          if (ConsentInformation.instance.consentStatus == ConsentStatus.required) {
-            try {
-              if (await ConsentInformation.instance.isConsentFormAvailable()) {
-                ConsentForm.loadAndShowConsentFormIfRequired((_) {
-                  completer.complete();
-                });
-                return;
-              }
-            } catch (e) {
-              debugPrint('UMP form error: $e');
-            }
-          }
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      ConsentRequestParameters(),
+      () {
+        ConsentForm.loadAndShowConsentFormIfRequired((_) {
           completer.complete();
-        },
-        (FormError error) {
-          debugPrint('UMP consent update error: ${error.message}');
-          completer.complete();
-        },
-      );
-    } catch (e) {
-      debugPrint('UMP consent error: $e');
-      completer.complete();
-    }
+        });
+      },
+      (FormError error) {
+        debugPrint('UMP consent error: ${error.message}');
+        completer.complete();
+      },
+    );
     return completer.future;
   }
 
