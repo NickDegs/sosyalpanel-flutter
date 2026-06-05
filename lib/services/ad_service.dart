@@ -52,19 +52,36 @@ class AdService {
   }
 
   Future<void> _requestConsentInfo() async {
+    final completer = Completer<void>();
     try {
-      final params = ConsentRequestParameters();
-      await ConsentInformation.instance.requestConsentInfoUpdate(params);
-
-      final status = await ConsentInformation.instance.getConsentStatus();
-      if (status == ConsentStatus.required) {
-        if (await ConsentInformation.instance.isConsentFormAvailable()) {
-          await ConsentForm.loadAndShowConsentFormIfRequired((_) {});
-        }
-      }
+      ConsentInformation.instance.requestConsentInfoUpdate(
+        ConsentRequestParameters(),
+        () async {
+          // Onay gerekiyorsa formu göster
+          if (ConsentInformation.instance.consentStatus == ConsentStatus.required) {
+            try {
+              if (await ConsentInformation.instance.isConsentFormAvailable()) {
+                ConsentForm.loadAndShowConsentFormIfRequired((_) {
+                  completer.complete();
+                });
+                return;
+              }
+            } catch (e) {
+              debugPrint('UMP form error: $e');
+            }
+          }
+          completer.complete();
+        },
+        (FormError error) {
+          debugPrint('UMP consent update error: ${error.message}');
+          completer.complete();
+        },
+      );
     } catch (e) {
       debugPrint('UMP consent error: $e');
+      completer.complete();
     }
+    return completer.future;
   }
 
   Future<RewardedAd?> loadRewardedAd() async {
