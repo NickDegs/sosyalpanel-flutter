@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const _kGlassDark = Color(0x1AFFFFFF);
 const _kGlassLight = Color(0x55FFFFFF);
@@ -134,11 +135,11 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
           shadowColor: Colors.transparent,
           foregroundColor: fg,
           iconTheme: IconThemeData(color: fg),
-          titleTextStyle: TextStyle(
+          titleTextStyle: GoogleFonts.nunito(
             color: fg,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            letterSpacing: -0.3,
+            fontSize: 19,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.2,
           ),
         ),
       ),
@@ -220,14 +221,14 @@ class GlassNavBar extends StatelessWidget {
                       const SizedBox(height: 2),
                       AnimatedDefaultTextStyle(
                         duration: const Duration(milliseconds: 200),
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                           fontSize: 10,
                           fontWeight:
-                              selected ? FontWeight.w600 : FontWeight.w400,
+                              selected ? FontWeight.w800 : FontWeight.w500,
                           color: selected
                               ? primary
                               : (isDark ? Colors.white38 : Colors.black38),
-                          letterSpacing: selected ? 0.1 : 0,
+                          letterSpacing: selected ? 0.2 : 0,
                         ),
                         child: Text(label),
                       ),

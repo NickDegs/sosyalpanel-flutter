@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'providers/locale_provider.dart';
 import 'services/ad_service.dart';
 import 'services/store_manager.dart';
@@ -56,10 +57,14 @@ class SocialPanelApp extends ConsumerWidget {
 
   ThemeData _buildTheme(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
+    final baseTextTheme = GoogleFonts.nunitoTextTheme(
+      ThemeData(brightness: brightness).textTheme,
+    );
     return ThemeData(
       colorSchemeSeed: LiquidGlass.colorSeed,
       brightness: brightness,
       useMaterial3: true,
+      textTheme: baseTextTheme,
       scaffoldBackgroundColor: Colors.transparent,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
