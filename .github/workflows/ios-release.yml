@@ -11,6 +11,9 @@ on:
         default: 'beta'
         required: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   ios:
     runs-on: macos-latest
