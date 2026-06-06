@@ -86,6 +86,21 @@ jobs:
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
 
+      - name: SPM bağımlılıklarını önceden çöz (timeout retry x3)
+        run: |
+          cd ios
+          for attempt in 1 2 3; do
+            echo "SPM resolve attempt $attempt/3"
+            xcodebuild -resolvePackageDependencies \
+              -workspace Runner.xcworkspace \
+              -scheme Runner \
+              -clonedSourcePackagesDirPath ~/.spm-cache \
+              2>&1 | tail -5 && break || {
+              [ $attempt -lt 3 ] && echo "Timeout, 20s sonra tekrar..." && sleep 20
+            }
+          done
+          cd ..
+
       - name: Boot simulator — ${{ matrix.name }}
         run: |
           UDID=$(xcrun simctl list devices available -j \
@@ -112,9 +127,14 @@ jobs:
       - name: Flutter build iOS (debug) — ${{ matrix.name }}
         if: env.SKIP != 'true'
         run: |
-          flutter build ios --debug --no-codesign \
-            --dart-define=DEVICE_CLASS=${{ matrix.device_class }} \
-            --simulator
+          for attempt in 1 2 3; do
+            echo "Build attempt $attempt/3"
+            flutter build ios --debug --no-codesign \
+              --dart-define=DEVICE_CLASS=${{ matrix.device_class }} \
+              --simulator && break || {
+              [ $attempt -lt 3 ] && echo "Başarısız, 15s sonra tekrar..." && sleep 15
+            }
+          done
         env:
           SIM_UDID: ${{ env.SIM_UDID }}
 

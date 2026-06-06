@@ -46,8 +46,11 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: false
 
-      - name: Install Fastlane via Bundler
+      - name: Install Fastlane + CocoaPods via Bundler
         run: bundle install
+
+      - name: Pod install (bundle exec pod — sistem Ruby uyumsuzluğunu önler)
+        run: cd ios && bundle exec pod install --repo-update
 
       - name: Decode App Store Connect API Key
         env:
