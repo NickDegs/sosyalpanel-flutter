@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/liquid_glass.dart';
 import '../utils/adaptive.dart';
+import '../utils/animations.dart';
 
 class ActionsView extends StatelessWidget {
   const ActionsView({super.key});
@@ -18,62 +19,71 @@ class ActionsView extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.fromLTRB(pad, topPad, pad, bottomPad),
         children: [
-          _GlassSectionCard(
-            icon: Icons.lightbulb_outline_rounded,
-            iconColor: const Color(0xFF60A5FA),
-            title: 'İçgörüler',
-            children: [
-              _GlassListItem(
-                icon: Icons.info_outline_rounded,
-                iconColor: const Color(0xFF60A5FA),
-                title: 'Yeterli veri bekleniyor',
-                subtitle:
-                    'Daha fazla veri toplandıkça içgörüler görünecek.',
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          _GlassSectionCard(
-            icon: Icons.checklist_rounded,
-            iconColor: const Color(0xFF34D399),
-            title: 'Yapılacak Aksiyonlar',
-            children: [
-              _GlassListItem(
-                icon: Icons.check_circle_outline_rounded,
-                iconColor: const Color(0xFF34D399),
-                title: 'Tüm aksiyonlar tamamlandı',
-                subtitle:
-                    'Hesaplarınız tarandıkça yeni öneriler eklenecek.',
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          GlassContainer(
-            borderRadius: 16,
-            tint: const Color(0x0FFFFFFF),
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          StaggeredItem(
+            index: 0,
+            child: _GlassSectionCard(
+              icon: Icons.lightbulb_outline_rounded,
+              iconColor: const Color(0xFF60A5FA),
+              title: 'İçgörüler',
               children: [
-                Icon(
-                  Icons.shield_outlined,
-                  size: 18,
-                  color: LiquidGlass.textSecondary(context),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    'Bu uygulama hesaplarınızda otomatik aksiyon ALMAZ. '
-                    'Tüm aksiyonları kendiniz gerçekleştirirsiniz. '
-                    'Bu, platformların kullanım koşullarına uygunluğu garanti eder.',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: LiquidGlass.textSecondary(context),
-                      height: 1.5,
-                    ),
-                  ),
+                _GlassListItem(
+                  icon: Icons.info_outline_rounded,
+                  iconColor: const Color(0xFF60A5FA),
+                  title: 'Yeterli veri bekleniyor',
+                  subtitle:
+                      'Daha fazla veri toplandıkça içgörüler görünecek.',
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          StaggeredItem(
+            index: 1,
+            child: _GlassSectionCard(
+              icon: Icons.checklist_rounded,
+              iconColor: const Color(0xFF34D399),
+              title: 'Yapılacak Aksiyonlar',
+              children: [
+                _GlassListItem(
+                  icon: Icons.check_circle_outline_rounded,
+                  iconColor: const Color(0xFF34D399),
+                  title: 'Tüm aksiyonlar tamamlandı',
+                  subtitle:
+                      'Hesaplarınız tarandıkça yeni öneriler eklenecek.',
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          StaggeredItem(
+            index: 2,
+            child: GlassContainer(
+              borderRadius: 16,
+              tint: const Color(0x0FFFFFFF),
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.shield_outlined,
+                    size: 18,
+                    color: LiquidGlass.textSecondary(context),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Bu uygulama hesaplarınızda otomatik aksiyon ALMAZ. '
+                      'Tüm aksiyonları kendiniz gerçekleştirirsiniz. '
+                      'Bu, platformların kullanım koşullarına uygunluğu garanti eder.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: LiquidGlass.textSecondary(context),
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/liquid_glass.dart';
+import '../utils/animations.dart';
 import 'followers/follower_tracking_view.dart';
 import 'metrics_view.dart';
 
@@ -58,8 +59,8 @@ class _AnalyticsViewState extends State<AnalyticsView>
         child: TabBarView(
           controller: _tab,
           children: const [
-            MetricsView(),
-            FollowerTrackingView(),
+            FadeSlideIn(child: MetricsView()),
+            FadeSlideIn(child: FollowerTrackingView()),
           ],
         ),
       ),

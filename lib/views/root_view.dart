@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/liquid_glass.dart';
 import '../utils/adaptive.dart';
+import '../utils/animations.dart';
 import 'dashboard_view.dart';
 import 'analytics_view.dart';
 import 'composer_view.dart';
@@ -67,7 +68,10 @@ class _PhoneScaffold extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: IndexedStack(
         index: selectedIndex,
-        children: _pages,
+        children: List.generate(
+          _pages.length,
+          (i) => TabFadeIn(isActive: selectedIndex == i, child: _pages[i]),
+        ),
       ),
       bottomNavigationBar: GlassNavBar(
         selectedIndex: selectedIndex,
@@ -149,7 +153,7 @@ class _TabletScaffold extends StatelessWidget {
                       final selected = i == selectedIndex;
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        child: GestureDetector(
+                        child: PressScale(
                           onTap: () => onTap(i),
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 200),

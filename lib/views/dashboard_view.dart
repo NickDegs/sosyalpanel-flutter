@@ -5,6 +5,7 @@ import '../providers/auth_provider.dart';
 import '../providers/locale_provider.dart';
 import '../theme/liquid_glass.dart';
 import '../utils/adaptive.dart';
+import '../utils/animations.dart';
 
 class DashboardView extends ConsumerWidget {
   const DashboardView({super.key});
@@ -48,36 +49,40 @@ class _EmptyState extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: topPad),
       child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GlassContainer(
-              borderRadius: 28,
-              padding: const EdgeInsets.all(28),
-              child: Icon(
-                Icons.share_rounded,
-                size: 52,
-                color: Theme.of(context).colorScheme.primary,
+        child: FadeSlideIn(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FloatLoop(
+                child: GlassContainer(
+                  borderRadius: 28,
+                  padding: const EdgeInsets.all(28),
+                  child: Icon(
+                    Icons.share_rounded,
+                    size: 52,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Henüz hesap bağlanmadı',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: LiquidGlass.textPrimary(context),
+              const SizedBox(height: 20),
+              Text(
+                'Henüz hesap bağlanmadı',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: LiquidGlass.textPrimary(context),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Ayarlar sekmesinden bir platform bağlayın.',
-              style: TextStyle(
-                color: LiquidGlass.textSecondary(context),
-                fontSize: 14,
+              const SizedBox(height: 8),
+              Text(
+                'Ayarlar sekmesinden bir platform bağlayın.',
+                style: TextStyle(
+                  color: LiquidGlass.textSecondary(context),
+                  fontSize: 14,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -105,7 +110,12 @@ class _AccountGrid extends StatelessWidget {
         childAspectRatio: context.cardAspectRatio,
       ),
       itemCount: connected.length,
-      itemBuilder: (context, i) => _PlatformCard(platform: connected[i]),
+      itemBuilder: (context, i) => StaggeredItem(
+        index: i,
+        child: PressScale(
+          child: _PlatformCard(platform: connected[i]),
+        ),
+      ),
     );
   }
 }

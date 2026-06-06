@@ -4,6 +4,7 @@ import '../models/platform.dart';
 import '../providers/auth_provider.dart';
 import '../theme/liquid_glass.dart';
 import '../utils/adaptive.dart';
+import '../utils/animations.dart';
 
 class ComposerView extends ConsumerStatefulWidget {
   const ComposerView({super.key});
@@ -49,15 +50,18 @@ class _ComposerViewState extends ConsumerState<ComposerView> {
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : FilledButton(
-                    onPressed: canSend ? _send : null,
-                    style: FilledButton.styleFrom(
-                      minimumSize: const Size(60, 34),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                : PulseGlow(
+                    active: canSend,
+                    child: FilledButton(
+                      onPressed: canSend ? _send : null,
+                      style: FilledButton.styleFrom(
+                        minimumSize: const Size(60, 34),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                      child: const Text('Paylaş', style: TextStyle(fontSize: 13)),
                     ),
-                    child: const Text('Paylaş', style: TextStyle(fontSize: 13)),
                   ),
           ),
         ],
@@ -68,89 +72,95 @@ class _ComposerViewState extends ConsumerState<ComposerView> {
           children: [
             // Text editor glass panel
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(pad, 0, pad, 8),
-                child: GlassContainer(
-                  borderRadius: 20,
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _controller,
-                          maxLines: null,
-                          expands: true,
-                          maxLength: 2200,
-                          style: TextStyle(
-                            color: LiquidGlass.textPrimary(context),
-                            fontSize: 16,
-                            height: 1.5,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: 'Ne paylaşmak istiyorsun?',
-                            hintStyle: TextStyle(
-                              color: LiquidGlass.textSecondary(context),
+              child: FadeSlideIn(
+                delay: const Duration(milliseconds: 60),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(pad, 0, pad, 8),
+                  child: GlassContainer(
+                    borderRadius: 20,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _controller,
+                            maxLines: null,
+                            expands: true,
+                            maxLength: 2200,
+                            style: TextStyle(
+                              color: LiquidGlass.textPrimary(context),
+                              fontSize: 16,
+                              height: 1.5,
                             ),
-                            border: InputBorder.none,
-                            counterStyle: TextStyle(
-                              color: LiquidGlass.textSecondary(context),
-                              fontSize: 11,
+                            decoration: InputDecoration(
+                              hintText: 'Ne paylaşmak istiyorsun?',
+                              hintStyle: TextStyle(
+                                color: LiquidGlass.textSecondary(context),
+                              ),
+                              border: InputBorder.none,
+                              counterStyle: TextStyle(
+                                color: LiquidGlass.textSecondary(context),
+                                fontSize: 11,
+                              ),
                             ),
+                            onChanged: (_) => setState(() {}),
                           ),
-                          onChanged: (_) => setState(() {}),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
 
             // Platform selector glass panel
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              child: GlassContainer(
-                borderRadius: 20,
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Platform Seç',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                        color: LiquidGlass.textSecondary(context),
-                        letterSpacing: 0.3,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    if (postable.isEmpty)
+            FadeSlideIn(
+              delay: const Duration(milliseconds: 160),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                child: GlassContainer(
+                  borderRadius: 20,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        'Paylaşım destekleyen hesap bağlı değil.',
+                        'Platform Seç',
                         style: TextStyle(
-                            color: LiquidGlass.textSecondary(context)),
-                      )
-                    else
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: postable.map((p) {
-                          final sel = _selectedPlatforms.contains(p);
-                          return FilterChip(
-                            avatar: Icon(p.icon, size: 16),
-                            label: Text(p.displayName),
-                            selected: sel,
-                            selectedColor: p.brandColor
-                                .withValues(alpha: isDark ? 0.3 : 0.2),
-                            checkmarkColor: p.brandColor,
-                            onSelected: (v) => setState(() =>
-                                v ? _selectedPlatforms.add(p) : _selectedPlatforms.remove(p)),
-                          );
-                        }).toList(),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                          color: LiquidGlass.textSecondary(context),
+                          letterSpacing: 0.3,
+                        ),
                       ),
-                  ],
+                      const SizedBox(height: 10),
+                      if (postable.isEmpty)
+                        Text(
+                          'Paylaşım destekleyen hesap bağlı değil.',
+                          style: TextStyle(
+                              color: LiquidGlass.textSecondary(context)),
+                        )
+                      else
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: postable.map((p) {
+                            final sel = _selectedPlatforms.contains(p);
+                            return FilterChip(
+                              avatar: Icon(p.icon, size: 16),
+                              label: Text(p.displayName),
+                              selected: sel,
+                              selectedColor: p.brandColor
+                                  .withValues(alpha: isDark ? 0.3 : 0.2),
+                              checkmarkColor: p.brandColor,
+                              onSelected: (v) => setState(() =>
+                                  v ? _selectedPlatforms.add(p) : _selectedPlatforms.remove(p)),
+                            );
+                          }).toList(),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),

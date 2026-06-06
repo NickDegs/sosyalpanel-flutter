@@ -6,6 +6,7 @@ import '../../providers/locale_provider.dart';
 import '../../services/auth_service.dart';
 import '../../theme/liquid_glass.dart';
 import '../../utils/adaptive.dart';
+import '../../utils/animations.dart';
 import '../auth/bluesky_auth_sheet.dart';
 import '../auth/simple_auth_sheet.dart';
 
@@ -25,27 +26,41 @@ class SettingsView extends ConsumerWidget {
       body: ListView(
         padding: EdgeInsets.fromLTRB(context.hPad, topPad, context.hPad, bottomPad),
         children: [
-          _GlassSection(
-            title: 'Bağlı Hesaplar',
-            children: SocialPlatform.values
-                .map((p) => _PlatformTile(
-                      platform: p,
-                      isConnected: connected.contains(p),
-                      onConnect: () => _connect(context, ref, p),
+          FadeSlideIn(
+            delay: const Duration(milliseconds: 60),
+            child: _GlassSection(
+              title: 'Bağlı Hesaplar',
+              children: [
+                for (int i = 0; i < SocialPlatform.values.length; i++)
+                  StaggeredItem(
+                    index: i,
+                    baseDelay: const Duration(milliseconds: 80),
+                    stepDelay: const Duration(milliseconds: 40),
+                    child: _PlatformTile(
+                      platform: SocialPlatform.values[i],
+                      isConnected: connected.contains(SocialPlatform.values[i]),
+                      onConnect: () => _connect(context, ref, SocialPlatform.values[i]),
                       onDisconnect: () =>
-                          ref.read(authProvider.notifier).disconnect(p),
-                    ))
-                .toList(),
+                          ref.read(authProvider.notifier).disconnect(SocialPlatform.values[i]),
+                    ),
+                  ),
+              ],
+            ),
           ),
           const SizedBox(height: 12),
-          _GlassSection(
-            title: 'Dil / Language',
-            children: [_LanguageTile()],
+          FadeSlideIn(
+            delay: const Duration(milliseconds: 160),
+            child: _GlassSection(
+              title: 'Dil / Language',
+              children: [_LanguageTile()],
+            ),
           ),
           const SizedBox(height: 12),
-          _GlassSection(
-            title: 'Uygulama',
-            children: [
+          FadeSlideIn(
+            delay: const Duration(milliseconds: 240),
+            child: _GlassSection(
+              title: 'Uygulama',
+              children: [
               _GlassListTile(
                 icon: Icons.privacy_tip_outlined,
                 title: 'Gizlilik Politikası',
@@ -70,6 +85,7 @@ class SettingsView extends ConsumerWidget {
                 ),
               ),
             ],
+          ),
           ),
         ],
       ),
