@@ -36,14 +36,21 @@ void main() {
   // ─── UC-12: Ayarlar — bölüm başlıkları ─────────────────────
   group('UC-12 Ayarlar — bölümler', () {
     testWidgets('Tüm bölüm başlıkları görünür', (tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
       await tester.pumpWidget(_wrapSettings());
       await tester.pumpAndSettle();
       expect(find.text('BAĞLI HESAPLAR'), findsOneWidget);
-      expect(find.text('DİL / LANGUAGE'), findsOneWidget);
+      // Dart toUpperCase: 'i' → 'I' (locale-bağımsız, İ değil)
+      expect(find.text('DIL / LANGUAGE'), findsOneWidget);
       expect(find.text('UYGULAMA'), findsOneWidget);
     });
 
     testWidgets('Sürüm 1.0.0 görünür', (tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
       await tester.pumpWidget(_wrapSettings());
       await tester.pumpAndSettle();
       expect(find.text('1.0.0'), findsOneWidget);
@@ -63,6 +70,9 @@ void main() {
   // ─── UC-14: Ayarlar — dil seçici ────────────────────────────
   group('UC-14 Ayarlar — dil seçici', () {
     testWidgets('Uygulama Dili tile\'ı görünür', (tester) async {
+      tester.view.physicalSize = const Size(800, 3000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
       await tester.pumpWidget(_wrapSettings());
       await tester.pumpAndSettle();
       expect(find.text('Uygulama Dili'), findsOneWidget);

@@ -26,7 +26,8 @@ void main() {
     testWidgets('5 sekme ikonu görünür', (tester) async {
       await tester.pumpWidget(_appWith());
       await tester.pumpAndSettle();
-      expect(find.byIcon(Icons.grid_view_outlined), findsWidgets);
+      // Tab 0 seçili → grid_view_rounded; diğerleri outlined
+      expect(find.byIcon(Icons.grid_view_rounded), findsWidgets);
       expect(find.byIcon(Icons.bar_chart_outlined), findsWidgets);
       expect(find.byIcon(Icons.edit_outlined), findsWidgets);
       expect(find.byIcon(Icons.checklist_outlined), findsWidgets);

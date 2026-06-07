@@ -187,52 +187,55 @@ class GlassNavBar extends StatelessWidget {
           ),
           padding: EdgeInsets.only(bottom: bottomPad, top: 8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(_items.length, (i) {
               final (activeIcon, icon, label) = _items[i];
               final selected = i == selectedIndex;
-              return GestureDetector(
-                onTap: () => onTap(i),
-                behavior: HitTestBehavior.opaque,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOutCubic,
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                  decoration: selected
-                      ? BoxDecoration(
-                          color: primary.withValues(alpha: isDark ? 0.25 : 0.15),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: primary.withValues(alpha: 0.3),
-                            width: 0.5,
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () => onTap(i),
+                  behavior: HitTestBehavior.opaque,
+                  child: Center(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOutCubic,
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      decoration: selected
+                          ? BoxDecoration(
+                              color: primary.withValues(alpha: isDark ? 0.25 : 0.15),
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: primary.withValues(alpha: 0.3),
+                                width: 0.5,
+                              ),
+                            )
+                          : null,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            selected ? activeIcon : icon,
+                            color: selected
+                                ? primary
+                                : (isDark ? Colors.white38 : Colors.black38),
+                            size: 22,
                           ),
-                        )
-                      : null,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        selected ? activeIcon : icon,
-                        color: selected
-                            ? primary
-                            : (isDark ? Colors.white38 : Colors.black38),
-                        size: 22,
+                          const SizedBox(height: 2),
+                          AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 200),
+                            style: GoogleFonts.nunito(
+                              fontSize: 10,
+                              fontWeight:
+                                  selected ? FontWeight.w800 : FontWeight.w500,
+                              color: selected
+                                  ? primary
+                                  : (isDark ? Colors.white38 : Colors.black38),
+                              letterSpacing: selected ? 0.2 : 0,
+                            ),
+                            child: Text(label),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 2),
-                      AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 200),
-                        style: GoogleFonts.nunito(
-                          fontSize: 10,
-                          fontWeight:
-                              selected ? FontWeight.w800 : FontWeight.w500,
-                          color: selected
-                              ? primary
-                              : (isDark ? Colors.white38 : Colors.black38),
-                          letterSpacing: selected ? 0.2 : 0,
-                        ),
-                        child: Text(label),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               );

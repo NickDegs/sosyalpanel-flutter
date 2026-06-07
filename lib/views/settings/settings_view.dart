@@ -223,8 +223,9 @@ class _GlassSection extends StatelessWidget {
         GlassContainer(
           borderRadius: 20,
           padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Column(
-            children: children,
+          child: Material(
+            type: MaterialType.transparency,
+            child: Column(children: children),
           ),
         ),
       ],
