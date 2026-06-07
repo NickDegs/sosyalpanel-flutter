@@ -59,10 +59,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
-          bundler-cache: true
+          bundler-cache: false
 
-      - name: Install Fastlane
-        run: gem install fastlane
+      - name: Install gems (Gemfile — multi_json dahil)
+        run: bundle install
 
       - name: Write Google Play service account key
         env:
@@ -87,4 +87,4 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m"
-        run: fastlane android ${{ github.event.inputs.lane || 'beta' }}
+        run: bundle exec fastlane android ${{ github.event.inputs.lane || 'beta' }}
