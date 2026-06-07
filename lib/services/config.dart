@@ -51,6 +51,26 @@ class Config {
             authorizationUrl:
                 'https://www.tiktok.com/v2/auth/authorize?client_key=TIKTOK_CLIENT_KEY&redirect_uri=sosyalpanel://oauth/tiktok&scope=user.info.basic&response_type=code',
           ),
+        SocialPlatform.threads => OAuthConfig(
+            clientId: 'META_APP_ID',
+            authorizationUrl:
+                'https://threads.net/oauth/authorize?client_id=META_APP_ID&redirect_uri=sosyalpanel://oauth/threads&scope=threads_basic,threads_content_publish&response_type=code',
+          ),
+        SocialPlatform.pinterest => OAuthConfig(
+            clientId: 'PINTEREST_APP_ID',
+            authorizationUrl:
+                'https://www.pinterest.com/oauth/?client_id=PINTEREST_APP_ID&redirect_uri=sosyalpanel://oauth/pinterest&response_type=code&scope=boards:read,pins:read,pins:write',
+          ),
+        SocialPlatform.tumblr => OAuthConfig(
+            clientId: 'TUMBLR_CONSUMER_KEY',
+            authorizationUrl:
+                'https://www.tumblr.com/oauth2/authorize?client_id=TUMBLR_CONSUMER_KEY&redirect_uri=sosyalpanel://oauth/tumblr&response_type=code&scope=basic+write',
+          ),
+        SocialPlatform.vk => OAuthConfig(
+            clientId: 'VK_APP_ID',
+            authorizationUrl:
+                'https://oauth.vk.com/authorize?client_id=VK_APP_ID&redirect_uri=sosyalpanel://oauth/vk&response_type=code&scope=wall,offline',
+          ),
         _ => OAuthConfig(clientId: '', authorizationUrl: ''),
       };
 }
