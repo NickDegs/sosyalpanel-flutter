@@ -85,7 +85,7 @@ Widget _composerWith({Set<SocialPlatform> connected = const {}}) =>
       ),
     );
 
-class _MockAuthNotifier extends AsyncNotifier<AuthState> {
+class _MockAuthNotifier extends AuthNotifier {
   final Set<SocialPlatform> _connected;
   _MockAuthNotifier(this._connected);
 

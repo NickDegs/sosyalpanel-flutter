@@ -71,9 +71,7 @@ platform :ios do
       changelog: "Yeni güncelleme yüklendi"
     )
 
-    # Barış'ın her iki Apple ID'sini external beta tester olarak ekle
-    # (Internal testers = App Store Connect Users; daclen100@gmail.com zaten içeride)
-    # daclen10@icloud.com ve daclen10@gmail.com için external tester kaydı açıyoruz
+    # daclen10@icloud.com (Account Holder) ve daclen10@gmail.com'u tester listesine ekle
     ["daclen10@icloud.com", "daclen10@gmail.com"].each do |email|
       begin
         add_test_flight_tester(

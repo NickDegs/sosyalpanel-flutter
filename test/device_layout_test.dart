@@ -74,7 +74,6 @@ void main() {
   group('isTablet / isPhone doğrulama', () {
     testWidgets('telefon: isPhone=true, isTablet=false', (tester) async {
       await tester.pumpWidget(_TestApp(width: 393, child: _FlagWidget()));
-      final w = tester.widget<_FlagWidget>(find.byType(_FlagWidget));
       final ctx = tester.element(find.byType(_FlagWidget));
       expect(ctx.isPhone, isTrue);
       expect(ctx.isTablet, isFalse);

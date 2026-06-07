@@ -5,7 +5,6 @@ import 'package:sosyalpanel/models/platform.dart';
 import 'package:sosyalpanel/providers/auth_provider.dart';
 import 'package:sosyalpanel/views/root_view.dart';
 import 'package:sosyalpanel/theme/liquid_glass.dart';
-import 'package:sosyalpanel/providers/locale_provider.dart';
 
 // UC-01 … UC-06 — Navigasyon & sekme kullanım senaryoları
 
@@ -162,7 +161,7 @@ Widget _appWith({Set<SocialPlatform> connected = const {}}) {
   );
 }
 
-class _MockAuthNotifier extends AsyncNotifier<AuthState> {
+class _MockAuthNotifier extends AuthNotifier {
   final Set<SocialPlatform> _connected;
   _MockAuthNotifier(this._connected);
 
