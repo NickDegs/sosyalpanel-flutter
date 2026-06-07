@@ -70,24 +70,30 @@ void main() {
   });
 }
 
-Widget _wrap(Widget child) => ProviderScope(
+Widget _wrap(Widget w) => ProviderScope(
       overrides: [
-        authProvider.overrideWith(
-            () => _MockAuthNotifier({})),
+        authProvider.overrideWith(() => _MockAuthNotifier({})),
       ],
       child: MaterialApp(
-        home: Scaffold(body: child),
+        builder: (ctx, child) => MediaQuery(
+          data: MediaQuery.of(ctx).copyWith(disableAnimations: true),
+          child: child!,
+        ),
+        home: Scaffold(body: w),
         debugShowCheckedModeBanner: false,
       ),
     );
 
 Widget _wrapSettings() => ProviderScope(
       overrides: [
-        authProvider.overrideWith(
-            () => _MockAuthNotifier({})),
+        authProvider.overrideWith(() => _MockAuthNotifier({})),
       ],
-      child: const MaterialApp(
-        home: SettingsView(),
+      child: MaterialApp(
+        builder: (ctx, child) => MediaQuery(
+          data: MediaQuery.of(ctx).copyWith(disableAnimations: true),
+          child: child!,
+        ),
+        home: const SettingsView(),
         debugShowCheckedModeBanner: false,
       ),
     );

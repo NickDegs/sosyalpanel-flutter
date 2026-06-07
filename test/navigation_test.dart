@@ -154,8 +154,12 @@ Widget _appWith({Set<SocialPlatform> connected = const {}}) {
     overrides: [
       authProvider.overrideWith(() => _MockAuthNotifier(connected)),
     ],
-    child: const MaterialApp(
-      home: RootView(),
+    child: MaterialApp(
+      builder: (ctx, child) => MediaQuery(
+        data: MediaQuery.of(ctx).copyWith(disableAnimations: true),
+        child: child!,
+      ),
+      home: const RootView(),
       debugShowCheckedModeBanner: false,
     ),
   );

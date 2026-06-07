@@ -41,9 +41,9 @@ void main() {
       await tester.pumpWidget(_composerWith(
           connected: {SocialPlatform.instagram, SocialPlatform.bluesky}));
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.edit_outlined).first);
-      await tester.pumpAndSettle();
+      // Platform Seç paneli ComposerView'da her zaman görünürdür
       expect(find.text('Platform Seç'), findsOneWidget);
+      expect(find.byType(FilterChip), findsWidgets);
     });
 
     testWidgets('Platform seç + metin yaz → buton aktif', (tester) async {
@@ -79,8 +79,12 @@ Widget _composerWith({Set<SocialPlatform> connected = const {}}) =>
       overrides: [
         authProvider.overrideWith(() => _MockAuthNotifier(connected)),
       ],
-      child: const MaterialApp(
-        home: Scaffold(body: ComposerView()),
+      child: MaterialApp(
+        builder: (ctx, child) => MediaQuery(
+          data: MediaQuery.of(ctx).copyWith(disableAnimations: true),
+          child: child!,
+        ),
+        home: const Scaffold(body: ComposerView()),
         debugShowCheckedModeBanner: false,
       ),
     );

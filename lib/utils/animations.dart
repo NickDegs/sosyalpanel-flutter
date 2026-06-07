@@ -45,6 +45,7 @@ class _FadeSlideInState extends State<FadeSlideIn>
   late final AnimationController _ctrl;
   late final Animation<double> _opacity;
   late final Animation<Offset> _slide;
+  bool _started = false;
 
   @override
   void initState() {
@@ -53,10 +54,22 @@ class _FadeSlideInState extends State<FadeSlideIn>
     _opacity = CurvedAnimation(parent: _ctrl, curve: AppCurves.enter);
     _slide   = Tween(begin: widget.beginOffset, end: Offset.zero)
         .animate(CurvedAnimation(parent: _ctrl, curve: AppCurves.enter));
+  }
 
-    Future.delayed(widget.delay, () {
-      if (mounted) _ctrl.forward();
-    });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    if (MediaQuery.disableAnimationsOf(context)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _ctrl.value = 1.0;
+      });
+    } else {
+      Future.delayed(widget.delay, () {
+        if (mounted) _ctrl.forward();
+      });
+    }
   }
 
   @override
@@ -201,6 +214,7 @@ class _FloatLoopState extends State<FloatLoop>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<Offset> _slide;
+  bool _started = false;
 
   @override
   void initState() {
@@ -208,7 +222,7 @@ class _FloatLoopState extends State<FloatLoop>
     _ctrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2400),
-    )..repeat(reverse: true);
+    );
     _slide = Tween(begin: const Offset(0, -0.025), end: const Offset(0, 0.025))
         .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
   }
@@ -217,8 +231,15 @@ class _FloatLoopState extends State<FloatLoop>
   void dispose() { _ctrl.dispose(); super.dispose(); }
 
   @override
-  Widget build(BuildContext context) =>
-      SlideTransition(position: _slide, child: widget.child);
+  Widget build(BuildContext context) {
+    if (!_started && !MediaQuery.disableAnimationsOf(context)) {
+      _started = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _ctrl.repeat(reverse: true);
+      });
+    }
+    return SlideTransition(position: _slide, child: widget.child);
+  }
 }
 
 // ─── PulseGlow ────────────────────────────────────────────────────────────────
@@ -236,6 +257,7 @@ class _PulseGlowState extends State<PulseGlow>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<double> _scale;
+  bool _repeatStarted = false;
 
   @override
   void initState() {
@@ -247,23 +269,30 @@ class _PulseGlowState extends State<PulseGlow>
     _scale = Tween(begin: 1.0, end: 1.06).animate(
       CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut),
     );
-    if (widget.active) _ctrl.repeat(reverse: true);
+    // repeat() deferred to build() to check disableAnimations
   }
 
   @override
   void didUpdateWidget(PulseGlow old) {
     super.didUpdateWidget(old);
-    if (widget.active && !old.active) {
-      _ctrl.repeat(reverse: true);
-    } else if (!widget.active && old.active) {
+    if (!widget.active && old.active) {
       _ctrl.stop(); _ctrl.value = 0;
+      _repeatStarted = false;
     }
+    // active=true case handled in build()
   }
 
   @override
   void dispose() { _ctrl.dispose(); super.dispose(); }
 
   @override
-  Widget build(BuildContext context) =>
-      ScaleTransition(scale: _scale, child: widget.child);
+  Widget build(BuildContext context) {
+    if (widget.active && !_repeatStarted && !MediaQuery.disableAnimationsOf(context)) {
+      _repeatStarted = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && widget.active) _ctrl.repeat(reverse: true);
+      });
+    }
+    return ScaleTransition(scale: _scale, child: widget.child);
+  }
 }
