@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sosyalpanel/models/platform.dart';
-import 'package:sosyalpanel/providers/auth_provider.dart';
+import 'package:sosyalpanel/providers/account_provider.dart';
 import 'package:sosyalpanel/views/actions_view.dart';
 import 'package:sosyalpanel/views/settings/settings_view.dart';
 
-// UC-11 … UC-14 — Aksiyon Merkezi & Ayarlar
+// UC-11 … UC-14 — İçerik Önerileri & Ayarlar
 
 void main() {
-  // ─── UC-11: Aksiyon Merkezi ──────────────────────────────────
-  group('UC-11 Aksiyon Merkezi — içerik', () {
-    testWidgets('İçgörüler bölümü görünür', (tester) async {
+  // ─── UC-11: İçerik Önerileri ─────────────────────────────
+  group('UC-11 İçerik Önerileri — bölüm başlıkları', () {
+    testWidgets('"En İyi Paylaşım Saatleri" bölümü görünür', (tester) async {
       await tester.pumpWidget(_wrap(const ActionsView()));
       await tester.pumpAndSettle();
-      expect(find.text('İçgörüler'), findsOneWidget);
+      expect(find.text('En İyi Paylaşım Saatleri'), findsOneWidget);
     });
 
-    testWidgets('Yapılacak Aksiyonlar bölümü görünür', (tester) async {
+    testWidgets('"İçerik Fikirleri" bölümü görünür', (tester) async {
       await tester.pumpWidget(_wrap(const ActionsView()));
       await tester.pumpAndSettle();
-      expect(find.text('Yapılacak Aksiyonlar'), findsOneWidget);
+      expect(find.text('İçerik Fikirleri'), findsOneWidget);
     });
 
     testWidgets('Gizlilik notu görünür', (tester) async {
       await tester.pumpWidget(_wrap(const ActionsView()));
       await tester.pumpAndSettle();
       expect(
-          find.textContaining(
-              'Bu uygulama hesaplarınızda otomatik aksiyon ALMAZ'),
-          findsOneWidget);
+        find.textContaining(
+            'Bu uygulama hesaplarınızda otomatik aksiyon ALMAZ'),
+        findsOneWidget,
+      );
     });
   });
 
-  // ─── UC-12: Ayarlar — bölüm başlıkları ─────────────────────
+  // ─── UC-12: Ayarlar — bölüm başlıkları ──────────────────
   group('UC-12 Ayarlar — bölümler', () {
     testWidgets('Tüm bölüm başlıkları görünür', (tester) async {
       tester.view.physicalSize = const Size(800, 3000);
@@ -41,8 +41,8 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       await tester.pumpWidget(_wrapSettings());
       await tester.pumpAndSettle();
-      expect(find.text('BAĞLI HESAPLAR'), findsOneWidget);
-      // Dart toUpperCase: 'i' → 'I' (locale-bağımsız, İ değil)
+      // Dart toUpperCase: 'i' → 'I' (locale-bağımsız, 'İ' değil)
+      expect(find.text('TAKIP EDILEN HESAPLAR'), findsOneWidget);
       expect(find.text('DIL / LANGUAGE'), findsOneWidget);
       expect(find.text('UYGULAMA'), findsOneWidget);
     });
@@ -57,17 +57,22 @@ void main() {
     });
   });
 
-  // ─── UC-13: Ayarlar — 14 platform sayısı ────────────────────
-  group('UC-13 Ayarlar — 14 platform', () {
-    testWidgets('14 platform tile sayısı doğru', (tester) async {
+  // ─── UC-13: Ayarlar — Platformları Aç bölümü ────────────
+  group('UC-13 Ayarlar — Platformları Aç', () {
+    testWidgets('"Platformları Aç" bölümü görünür', (tester) async {
       await tester.pumpWidget(_wrapSettings());
       await tester.pumpAndSettle();
-      expect(find.text('Bağlı değil').evaluate().length,
-          SocialPlatform.values.length);
+      expect(find.text('PLATFORMLARI AÇ'), findsOneWidget);
+    });
+
+    testWidgets('Instagram tile görünür', (tester) async {
+      await tester.pumpWidget(_wrapSettings());
+      await tester.pumpAndSettle();
+      expect(find.text('Instagram'), findsWidgets);
     });
   });
 
-  // ─── UC-14: Ayarlar — dil seçici ────────────────────────────
+  // ─── UC-14: Ayarlar — dil seçici ────────────────────────
   group('UC-14 Ayarlar — dil seçici', () {
     testWidgets('Uygulama Dili tile\'ı görünür', (tester) async {
       tester.view.physicalSize = const Size(800, 3000);
@@ -80,9 +85,11 @@ void main() {
   });
 }
 
+// ─── Helpers ─────────────────────────────────────────────────
+
 Widget _wrap(Widget w) => ProviderScope(
       overrides: [
-        authProvider.overrideWith(() => _MockAuthNotifier({})),
+        accountProvider.overrideWith(() => _MockAccountNotifier()),
       ],
       child: MaterialApp(
         builder: (ctx, child) => MediaQuery(
@@ -96,7 +103,7 @@ Widget _wrap(Widget w) => ProviderScope(
 
 Widget _wrapSettings() => ProviderScope(
       overrides: [
-        authProvider.overrideWith(() => _MockAuthNotifier({})),
+        accountProvider.overrideWith(() => _MockAccountNotifier()),
       ],
       child: MaterialApp(
         builder: (ctx, child) => MediaQuery(
@@ -108,11 +115,7 @@ Widget _wrapSettings() => ProviderScope(
       ),
     );
 
-class _MockAuthNotifier extends AuthNotifier {
-  final Set<SocialPlatform> _connected;
-  _MockAuthNotifier(this._connected);
-
+class _MockAccountNotifier extends AccountNotifier {
   @override
-  Future<AuthState> build() async =>
-      AuthState(connected: _connected);
+  Future<List<AccountEntry>> build() async => [];
 }

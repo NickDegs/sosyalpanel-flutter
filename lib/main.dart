@@ -86,7 +86,8 @@ class SocialPanelApp extends ConsumerWidget {
           color: isDark ? Colors.white70 : Colors.black87,
           fontSize: 12,
         ),
-        backgroundColor: isDark ? const Color(0x18FFFFFF) : const Color(0x20000000),
+        backgroundColor:
+            isDark ? const Color(0x18FFFFFF) : const Color(0x20000000),
       ),
       dividerTheme: DividerThemeData(
         color: isDark ? const Color(0x28FFFFFF) : const Color(0x28000000),
