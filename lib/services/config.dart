@@ -1,7 +1,7 @@
 import '../models/platform.dart';
 
 class Config {
-  static const String backendUrl = 'https://api.realvirtuality.app';
+  static const String backendUrl = 'https://api.nickdegs.com';
   static const String appScheme = 'sosyalpanel';
   static const String privacyUrl = 'https://realvirtuality.app/privacy.html';
 
